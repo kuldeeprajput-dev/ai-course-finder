@@ -1,0 +1,5 @@
+{
+  "name": " EduFlow AI",
+  "description": "AI-powered course search and custom roadmap generator using Google Search grounding to find the best free educational resources across the web.",
+  "requestFramePermissions": []
+}
