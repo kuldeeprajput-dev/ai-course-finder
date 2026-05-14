@@ -2,14 +2,15 @@
 
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Search } from 'lucide-react';
+import { Search, Loader2 } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 interface SearchBarProps {
   value: string;
   onChange: (value: string) => void;
   onSubmit: (e: React.FormEvent) => void;
   isLoading?: boolean;
-  activeTab:string;
+  activeTab: string;
   placeholder?: string;
 }
 
@@ -30,16 +31,29 @@ export function SearchBar({
           value={value}
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
-          className="pl-12 w-50 text-xs sm:text-lg sm:w-full"
+          className="pl-12 w-full text-sm sm:text-lg"
           disabled={isLoading}
         />
       </div>
-      {
-        activeTab === "search" && <Button type="submit" disabled={isLoading || !value.trim()} className="px-4 sm:px-6">
-        <span className="hidden sm:inline">{isLoading ? 'Searching...' : 'Search'}</span>
-        <span className="sm:hidden"><Search className="w-4 h-4" /></span>
-      </Button>
-      }
+      {activeTab === "search" && (
+        <Button 
+          type="submit" 
+          disabled={isLoading || !value.trim()} 
+          className="px-4 sm:px-8 min-w-[100px] sm:min-w-[140px] flex items-center justify-center gap-2"
+        >
+          {isLoading ? (
+            <>
+              <Loader2 className="w-4 h-4 animate-spin" />
+              <span className="hidden sm:inline">Searching</span>
+            </>
+          ) : (
+            <>
+              <Search className="w-4 h-4 sm:hidden" />
+              <span className="hidden sm:inline">Search</span>
+            </>
+          )}
+        </Button>
+      )}
     </form>
   );
 }

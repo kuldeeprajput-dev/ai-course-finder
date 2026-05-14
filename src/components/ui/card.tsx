@@ -61,8 +61,12 @@ export function LoadingSpinner({ size = 'md', className }: LoadingSpinnerProps) 
   const sizes = {
     sm: 'w-4 h-4',
     md: 'w-6 h-6',
-    lg: 'w-8 h-8',
+    lg: 'w-10 h-10',
   };
 
-  return <Loader2 className={cn('animate-spin', sizes[size], className)} />;
+  return (
+    <div className={cn("flex flex-col items-center justify-center gap-3", className)}>
+      <Loader2 className={cn('animate-spin text-brand-orange', sizes[size])} />
+    </div>
+  );
 }

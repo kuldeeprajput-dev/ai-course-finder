@@ -31,7 +31,7 @@ function MessageContent({ content, isUser }: { content: string; isUser: boolean 
       [&_code]:text-xs [&_code]:bg-black/10 [&_code]:px-1 [&_code]:py-0.5 [&_code]:rounded [&_code]:font-mono
       [&_pre]:bg-black/5 [&_pre]:p-3 [&_pre]:rounded [&_pre]:overflow-x-auto [&_pre]:my-2
       [&_strong]:text-brand-orange [&_a]:text-brand-orange [&_a]:underline
-      [&_a]:text-brand-orange [&_hr]:border-brand-black/20">
+      [&_hr]:border-brand-black/20">
       <ReactMarkdown>{content}</ReactMarkdown>
     </div>
   );

@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import { cn } from '@/lib/utils';
-import { Settings, MessageCircle, BookOpen, Heart } from 'lucide-react';
+import { cn } from "@/lib/utils";
+import { Settings, MessageCircle, BookOpen, Heart } from "lucide-react";
 
 interface TabNavProps {
-  activeTab: 'search' | 'roadmap' | 'favorites';
-  onTabChange: (tab: 'search' | 'roadmap' | 'favorites') => void;
+  activeTab: "search" | "roadmap" | "favorites";
+  onTabChange: (tab: "search" | "roadmap" | "favorites") => void;
   onOpenChat: () => void;
   onOpenSettings: () => void;
 }
@@ -17,9 +17,9 @@ export function TabNav({
   onOpenSettings,
 }: TabNavProps) {
   const tabs = [
-    { id: 'search' as const, label: 'Find Courses', icon: BookOpen },
-    { id: 'roadmap' as const, label: 'Roadmap', icon: BookOpen },
-    { id: 'favorites' as const, label: 'Favorites', icon: Heart },
+    { id: "search" as const, label: "Find Courses", icon: BookOpen },
+    { id: "roadmap" as const, label: "Roadmap", icon: BookOpen },
+    { id: "favorites" as const, label: "Favorites", icon: Heart },
   ];
 
   return (
@@ -30,10 +30,10 @@ export function TabNav({
             key={tab.id}
             onClick={() => onTabChange(tab.id)}
             className={cn(
-              'flex items-center gap-2 p-2 sm:p-3 font-bold brutal-border transition-all shrink-0',
+              "flex items-center gap-2 p-2 sm:p-3 font-bold brutal-border transition-all shrink-0",
               activeTab === tab.id
-                ? 'bg-brand-orange text-white shadow-none'
-                : 'bg-white text-brand-black hover:bg-brand-paper'
+                ? "bg-brand-orange text-white shadow-none"
+                : "bg-white text-brand-black hover:bg-brand-paper",
             )}
           >
             <tab.icon className="w-4 h-4" />
