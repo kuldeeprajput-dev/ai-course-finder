@@ -16,6 +16,17 @@ export function useChat() {
   const [isLoaded, setIsLoaded] = useState(false);
   const abortControllerRef = useRef<AbortController | null>(null);
 
+  const cancelActiveRequest = useCallback(() => {
+    if (abortControllerRef.current) {
+      try {
+        abortControllerRef.current.abort();
+      } catch {
+        // Ignore expected abort signal errors
+      }
+      abortControllerRef.current = null;
+    }
+  }, []);
+
   useEffect(() => {
     try {
       const stored = localStorage.getItem(ACTIVE_CHAT_STORAGE_KEY);
@@ -41,9 +52,7 @@ export function useChat() {
 
   const sendMessage = useCallback(
     async (content: string) => {
-      if (abortControllerRef.current) {
-        abortControllerRef.current.abort();
-      }
+      cancelActiveRequest();
 
       const userMessage: ChatMessage = {
         id: `user-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`,
@@ -119,10 +128,16 @@ export function useChat() {
           );
         }
       } catch (error) {
-        console.error("Chat error:", error);
-        if ((error as Error).name === "AbortError") {
+        const isAbort =
+          (error as Error).name === "AbortError" ||
+          (error as Error).message?.includes("aborted") ||
+          (error as Error).message?.includes("Abort");
+
+        if (isAbort) {
           return;
         }
+
+        console.error("Chat error:", error);
         setMessages((prev) =>
           prev.map((msg) =>
             msg.id === assistantMessageId
@@ -139,22 +154,23 @@ export function useChat() {
         abortControllerRef.current = null;
       }
     },
-    [messages, settings],
+    [cancelActiveRequest, messages, settings],
   );
 
-  const loadMessages = useCallback((newMessages: ChatMessage[]) => {
-    if (abortControllerRef.current) {
-      abortControllerRef.current.abort();
-    }
-    setMessages(newMessages);
-  }, []);
+  const loadMessages = useCallback(
+    (newMessages: ChatMessage[]) => {
+      cancelActiveRequest();
+      setMessages(newMessages);
+      setIsLoading(false);
+    },
+    [cancelActiveRequest],
+  );
 
   const clearMessages = useCallback(() => {
-    if (abortControllerRef.current) {
-      abortControllerRef.current.abort();
-    }
+    cancelActiveRequest();
     setMessages([]);
-  }, []);
+    setIsLoading(false);
+  }, [cancelActiveRequest]);
 
   return {
     messages,
