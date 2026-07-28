@@ -1,30 +1,68 @@
 @import "tailwindcss";
 
 @theme {
-  --color-brand-black: #000000;
-  --color-brand-paper: #f0f0f0;
-  --color-brand-orange: #ff5c00;
-  --color-brand-gray: #666666;
+  --color-brand-black: #17211b;
+  --color-brand-paper: #f3f5f1;
+  --color-brand-orange: #e85d3f;
+  --color-brand-gray: #68736c;
 
-  --shadow-brutal: 4px 4px 0px #000000;
-  --shadow-brutal-xl: 8px 8px 0px #000000;
+  --shadow-brutal: 0 12px 32px rgba(23, 33, 27, 0.08);
+  --shadow-brutal-xl: 0 24px 64px rgba(23, 33, 27, 0.14);
 }
 
 @layer utilities {
   .brutal-border {
-    border: 2px solid #000000;
+    border: 1px solid #dde2dc;
+    border-radius: 1rem;
+  }
+
+  .font-display {
+    font-family: var(--font-playfair), Georgia, serif;
   }
 }
 
 :root {
-  --background: #ffffff;
-  --foreground: #000000;
+  --background: #f7f8f5;
+  --foreground: #17211b;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
+  background:
+    radial-gradient(circle at 5% 5%, rgba(232, 93, 63, 0.05), transparent 25rem),
+    var(--background);
   color: var(--foreground);
   min-height: 100vh;
+  font-family: var(--font-inter), Arial, sans-serif;
+}
+
+button,
+a,
+input {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:focus-visible,
+a:focus-visible {
+  outline: 3px solid rgba(232, 93, 63, 0.25);
+  outline-offset: 2px;
+}
+
+input:focus-visible,
+input:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+::selection {
+  background: rgba(232, 93, 63, 0.18);
 }
 
 .shadow-brutal {
@@ -36,23 +74,61 @@ body {
 }
 
 .brutal-btn {
-  border: 2px solid #000000;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.75rem;
   background-color: var(--color-brand-orange);
   color: #ffffff;
   font-weight: 700;
-  padding: 0.75rem;
-  transition-property: all;
-  box-shadow: var(--shadow-brutal);
+  padding: 0.75rem 1rem;
+  transition: transform 180ms ease, background-color 180ms ease, box-shadow 180ms ease;
+  box-shadow: 0 8px 20px rgba(232, 93, 63, 0.22);
+}
+
+.brutal-btn:hover {
+  background-color: #d94e32;
+  transform: translateY(-1px);
 }
 
 .brutal-btn:active {
-  box-shadow: none;
-  transform: translate(4px, 4px);
+  transform: translateY(0);
+}
+
+/* Custom Thin & Beautiful Scrollbars */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(104, 115, 108, 0.35) transparent;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(104, 115, 108, 0.35);
+  border-radius: 9999px;
+  border: 1px solid transparent;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-brand-orange, #e85d3f);
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
 }
 
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
+
 .scrollbar-hide {
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -60,4 +136,15 @@ body {
 
 .pb-safe-area {
   padding-bottom: env(safe-area-inset-bottom);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
