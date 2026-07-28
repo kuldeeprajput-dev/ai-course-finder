@@ -7,9 +7,11 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "tsc --noEmit --incremental false",
+    "check": "npm run lint && npm run typecheck && npm run format:check",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "prepare": "husky"
   },
   "dependencies": {
     "@ai-sdk/google": "^0.0.36",
@@ -35,9 +37,18 @@
     "autoprefixer": "^10.4.21",
     "eslint": "^9",
     "eslint-config-next": "15",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.2.0",
     "postcss": "^8.5.0",
     "prettier": "^3.9.6",
     "tailwindcss": "^4.0.0",
     "typescript": "~5.8.2"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md,mdx,css,scss,yml,yaml}": "prettier --write"
   }
 }
