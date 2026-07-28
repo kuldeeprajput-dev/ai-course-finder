@@ -52,7 +52,7 @@ export function FavoritesSection({
       </div>
 
       {favorites.length === 0 ? (
-        <div className="rounded-2xl border border-[#dfe5de] bg-white p-12 text-center">
+        <div className="rounded-2xl border border-[#dfe5de] bg-white p-12 text-center max-sm:p-7">
           <span className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-red-50 text-red-400">
             <Heart className="h-6 w-6" />
           </span>
@@ -98,7 +98,7 @@ export function FavoritesSection({
       )}
 
       <div className="border-t border-[#dfe5de] pt-7">
-        <div className="flex items-center justify-between mb-4">
+        <div className="mb-4 flex items-center justify-between max-sm:flex-col max-sm:items-start max-sm:gap-3">
           <div className="flex items-center gap-2">
             <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#fcebe7] text-brand-orange">
               <Sparkles className="h-4 w-4" />
@@ -115,7 +115,7 @@ export function FavoritesSection({
             onClick={suggestions.onGetSuggestions}
             disabled={suggestions.isLoading || favorites.length === 0}
             className={cn(
-              "flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-medium text-brand-orange",
+              "flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-medium text-brand-orange max-sm:w-full max-sm:justify-center max-sm:border max-sm:border-brand-orange/15 max-sm:bg-[#fff7f4]",
               "hover:bg-[#fff1ed] disabled:opacity-50 disabled:cursor-not-allowed",
             )}
           >

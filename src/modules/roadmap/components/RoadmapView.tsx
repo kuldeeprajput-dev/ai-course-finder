@@ -35,12 +35,12 @@ function ResourceIcon({ type }: { type: string }) {
 
 function StepItem({ step }: { step: RoadmapStep }) {
   return (
-    <div className="relative pb-7 pl-11 last:pb-0">
+    <div className="relative pb-7 pl-11 last:pb-0 max-sm:pl-9">
       <div className="absolute left-0 top-0 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-brand-orange text-sm font-semibold text-white shadow-[0_4px_12px_rgba(232,93,63,0.25)]">
         {step.step}
       </div>
       <div className="absolute bottom-0 left-[15px] top-8 w-px bg-[#d9dfd9]" />
-      <div className="rounded-2xl border border-[#dfe5de] bg-white p-5 shadow-[0_8px_25px_rgba(23,33,27,0.045)] sm:p-6">
+      <div className="rounded-2xl border border-[#dfe5de] bg-white p-5 shadow-[0_8px_25px_rgba(23,33,27,0.045)] sm:p-6 max-sm:p-4">
         <h4 className="mb-2 text-lg font-semibold tracking-tight">
           {step.title}
         </h4>
@@ -59,12 +59,14 @@ function StepItem({ step }: { step: RoadmapStep }) {
                 target="_blank"
                 rel="noopener noreferrer"
                 className={cn(
-                  "flex items-center gap-2 rounded-lg border border-[#dfe4de] bg-brand-paper px-3 py-2 text-xs font-medium",
+                  "flex items-center gap-2 rounded-lg border border-[#dfe4de] bg-brand-paper px-3 py-2 text-xs font-medium max-sm:w-full",
                   "hover:border-brand-[#fff5f2] hover:text-brand-orange transition-colors",
                 )}
               >
                 <ResourceIcon type={resource.type} />
-                <span className="truncate max-w-[150px]">{resource.title}</span>
+                <span className="truncate max-w-[150px] max-sm:min-w-0 max-sm:flex-1 max-sm:max-w-none">
+                  {resource.title}
+                </span>
                 <ExternalLink className="w-3 h-3 shrink-0" />
               </a>
             ))}
@@ -120,7 +122,7 @@ export function RoadmapView({ roadmap, isLoading, error }: RoadmapViewProps) {
 
   return (
     <div className="space-y-6">
-      <div className="relative overflow-hidden rounded-2xl border border-[#d6e2db] bg-gradient-to-r from-[#f2f6f4] via-[#fafcfb] to-white px-7 py-9 sm:px-10 sm:py-11 min-h-[190px] flex items-center shadow-sm">
+      <div className="relative overflow-hidden rounded-2xl border border-[#d6e2db] bg-gradient-to-r from-[#f2f6f4] via-[#fafcfb] to-white px-7 py-9 sm:px-10 sm:py-11 min-h-[190px] flex items-center shadow-sm max-sm:min-h-0 max-sm:px-5 max-sm:py-7">
         <div className="w-full flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex-1">
             <div className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.14em] text-brand-orange mb-1.5">

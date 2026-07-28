@@ -40,7 +40,7 @@ export function SearchBar({
               ? "What skill do you want to master?"
               : placeholder
           }
-          className="h-11 w-full border-0 bg-transparent pl-12 text-sm focus:outline-none focus:border-transparent focus:ring-0 focus-visible:outline-none focus-visible:ring-0 focus-visible:border-transparent focus:shadow-none sm:h-12 sm:text-base"
+          className="h-11 w-full border-0 bg-transparent pl-12 text-sm focus:outline-none focus:border-transparent focus:ring-0 focus-visible:outline-none focus-visible:ring-0 focus-visible:border-transparent focus:shadow-none sm:h-12 sm:text-base max-sm:text-base"
           style={{ outline: "none", boxShadow: "none" }}
           disabled={isLoading}
         />
@@ -48,7 +48,7 @@ export function SearchBar({
       <Button
         type="submit"
         disabled={isLoading || !value.trim()}
-        className="h-11 min-w-[150px] gap-2 sm:h-12"
+        className="h-11 min-w-[150px] gap-2 sm:h-12 max-sm:w-full"
       >
         {isLoading ? (
           <>

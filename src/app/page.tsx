@@ -280,7 +280,7 @@ export default function Home() {
   return (
     <div className="flex min-h-screen flex-col">
       <header className="border-b border-[#e5e9e4] bg-white/85 backdrop-blur-xl">
-        <div className="mx-auto flex h-[72px] w-full max-w-7xl items-center justify-between px-4 sm:px-6">
+        <div className="mx-auto flex h-[72px] w-full max-w-7xl items-center justify-between px-4 sm:px-6 max-sm:h-16">
           <button
             className="flex items-center gap-3"
             onClick={() => setActiveTab("search")}
@@ -303,7 +303,7 @@ export default function Home() {
         </div>
       </header>
 
-      <main className="mx-auto w-full max-w-7xl flex-1 px-4 py-5 sm:px-6 sm:py-7">
+      <main className="mx-auto w-full max-w-7xl flex-1 px-4 py-5 sm:px-6 sm:py-7 max-sm:px-3 max-sm:py-4">
         <TabNav
           activeTab={activeTab}
           onTabChange={setActiveTab}
@@ -312,7 +312,7 @@ export default function Home() {
         />
 
         {activeTab !== "favorites" && (
-          <section className="relative mt-5 overflow-hidden rounded-[28px] bg-[linear-gradient(120deg,#315b4c_0%,#274c40_58%,#3b5b4e_100%)] px-5 py-8 text-white shadow-[0_20px_60px_rgba(39,76,64,0.2)] sm:px-10 sm:py-9 lg:px-14 lg:py-10">
+          <section className="relative mt-5 overflow-hidden rounded-[28px] bg-[linear-gradient(120deg,#315b4c_0%,#274c40_58%,#3b5b4e_100%)] px-5 py-8 text-white shadow-[0_20px_60px_rgba(39,76,64,0.2)] sm:px-10 sm:py-9 lg:px-14 lg:py-10 max-sm:mt-4 max-sm:rounded-2xl max-sm:px-4 max-sm:py-6">
             <div className="pointer-events-none absolute -right-20 -top-32 h-72 w-72 rounded-full border-[58px] border-white/[0.06]" />
             <div className="pointer-events-none absolute -bottom-36 right-32 h-64 w-64 rounded-full bg-[#f4b29f]/15 blur-3xl" />
             <div className="relative max-w-3xl">
@@ -320,7 +320,7 @@ export default function Home() {
                 <Sparkles className="h-3.5 w-3.5" />
                 {heroCopy.eyebrow}
               </p>
-              <h1 className="font-display max-w-2xl text-4xl leading-[1.04] tracking-[-0.035em] sm:text-[44px] lg:text-[50px]">
+              <h1 className="font-display max-w-2xl text-4xl leading-[1.04] tracking-[-0.035em] sm:text-[44px] lg:text-[50px] max-sm:text-[34px]">
                 {heroCopy.title}
               </h1>
               <p className="mt-3 max-w-2xl text-sm leading-6 text-white/65 sm:text-[15px]">
@@ -360,7 +360,7 @@ export default function Home() {
         )}
 
         {activeTab === "search" && (
-          <div className="space-y-7 py-8">
+          <div className="space-y-7 py-8 max-sm:space-y-6 max-sm:py-6">
             <PopularTopics onSelect={handleAction} disabled={isSearching} />
             {isSearching ? (
               <div className="flex min-h-64 flex-col items-center justify-center gap-4 rounded-2xl border border-[#e2e7e1] bg-white">
@@ -378,7 +378,7 @@ export default function Home() {
               </div>
             ) : courses.length > 0 ? (
               <section>
-                <div className="mb-5 flex items-end justify-between">
+                <div className="mb-5 flex items-end justify-between max-sm:flex-col max-sm:items-start max-sm:gap-2">
                   <div>
                     <p className="text-xs font-semibold uppercase tracking-[0.14em] text-brand-orange">
                       Curated for you
@@ -416,7 +416,7 @@ export default function Home() {
                 </p>
               </div>
             ) : (
-              <section className="grid gap-4 md:grid-cols-3">
+              <section className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                 {[
                   {
                     icon: Search,
@@ -453,14 +453,14 @@ export default function Home() {
         )}
 
         {activeTab === "roadmap" && (
-          <div className="space-y-5 py-8">
+          <div className="space-y-5 py-8 max-sm:py-6">
             <RoadmapView
               roadmap={roadmap}
               isLoading={isGenerating}
               error={roadmapError || undefined}
             />
             {roadmap && (
-              <div className="flex justify-end">
+              <div className="flex justify-end max-sm:[&>*]:w-full">
                 <ExportButton roadmap={roadmap} />
               </div>
             )}
@@ -468,7 +468,7 @@ export default function Home() {
         )}
 
         {activeTab === "favorites" && (
-          <div className="py-8">
+          <div className="py-8 max-sm:py-6">
             <FavoritesSection
               favorites={favorites}
               onRemove={removeFavorite}
