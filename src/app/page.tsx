@@ -312,51 +312,102 @@ export default function Home() {
         />
 
         {activeTab !== "favorites" && (
-          <section className="relative mt-5 overflow-hidden rounded-[28px] bg-[linear-gradient(120deg,#315b4c_0%,#274c40_58%,#3b5b4e_100%)] px-5 py-8 text-white shadow-[0_20px_60px_rgba(39,76,64,0.2)] sm:px-10 sm:py-9 lg:px-14 lg:py-10 max-sm:mt-4 max-sm:rounded-2xl max-sm:px-4 max-sm:py-6">
-            <div className="pointer-events-none absolute -right-20 -top-32 h-72 w-72 rounded-full border-[58px] border-white/[0.06]" />
-            <div className="pointer-events-none absolute -bottom-36 right-32 h-64 w-64 rounded-full bg-[#f4b29f]/15 blur-3xl" />
-            <div className="relative max-w-3xl">
-              <p className="mb-3 flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-[#f4aa98]">
-                <Sparkles className="h-3.5 w-3.5" />
-                {heroCopy.eyebrow}
-              </p>
-              <h1 className="font-display max-w-2xl text-4xl leading-[1.04] tracking-[-0.035em] sm:text-[44px] lg:text-[50px] max-sm:text-[34px]">
-                {heroCopy.title}
-              </h1>
-              <p className="mt-3 max-w-2xl text-sm leading-6 text-white/65 sm:text-[15px]">
-                {heroCopy.description}
-              </p>
-              <div className="mt-5 rounded-2xl bg-white p-2 shadow-[0_14px_34px_rgba(0,0,0,0.16)] sm:p-2.5">
-                <SearchBar
-                  value={activeTab === "search" ? searchQuery : roadmapQuery}
-                  onChange={
-                    activeTab === "search" ? setSearchQuery : setRoadmapQuery
-                  }
-                  onSubmit={
-                    activeTab === "search" ? handleSearch : handleGenerate
-                  }
-                  isLoading={
-                    activeTab === "search" ? isSearching : isGenerating
-                  }
-                  activeTab={activeTab}
-                />
+          <>
+            <section className="relative mt-3.5 overflow-hidden rounded-[20px] border border-[#dce3dc] bg-gradient-to-b from-[#f2f6f4] via-[#f7f9f8] to-white p-4 text-brand-black shadow-[0_10px_30px_rgba(23,33,27,0.04)] sm:hidden">
+              <div className="pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full bg-brand-orange/10 blur-2xl" />
+              <div className="pointer-events-none absolute -bottom-10 -left-10 h-32 w-32 rounded-full bg-emerald-600/10 blur-2xl" />
+
+              <div className="relative">
+                <div className="inline-flex items-center gap-1.5 rounded-full border border-brand-orange/20 bg-[#fcebe7] px-2.5 py-0.5 text-[9px] font-bold uppercase tracking-[0.14em] text-brand-orange">
+                  <Sparkles className="h-3 w-3" />
+                  {heroCopy.eyebrow}
+                </div>
+                <h1 className="font-display mt-2.5 text-[22px] font-normal leading-[1.12] tracking-[-0.03em] text-brand-black">
+                  {heroCopy.title}
+                </h1>
+                <p className="mt-1.5 text-[11px] font-normal leading-relaxed text-brand-gray">
+                  {heroCopy.description}
+                </p>
+
+                <div className="mt-3 rounded-xl border border-[#e0e5df] bg-white p-1 shadow-[0_6px_16px_rgba(23,33,27,0.06)]">
+                  <SearchBar
+                    value={activeTab === "search" ? searchQuery : roadmapQuery}
+                    onChange={
+                      activeTab === "search" ? setSearchQuery : setRoadmapQuery
+                    }
+                    onSubmit={
+                      activeTab === "search" ? handleSearch : handleGenerate
+                    }
+                    isLoading={
+                      activeTab === "search" ? isSearching : isGenerating
+                    }
+                    activeTab={activeTab}
+                  />
+                </div>
+
+                <div className="mt-3.5 flex items-center justify-between border-t border-[#e2e8e2] pt-2.5 text-[10px] font-medium text-brand-gray">
+                  <span className="flex items-center gap-1">
+                    <Check className="h-3 w-3 text-brand-orange" />
+                    100% Free
+                  </span>
+                  <span className="flex items-center gap-1">
+                    <Check className="h-3 w-3 text-brand-orange" />
+                    AI Personalized
+                  </span>
+                  <span className="flex items-center gap-1">
+                    <Check className="h-3 w-3 text-brand-orange" />
+                    Top Platforms
+                  </span>
+                </div>
               </div>
-              <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 text-[11px] text-white/55">
-                <span className="flex items-center gap-1.5">
-                  <Check className="h-3.5 w-3.5 text-[#f4aa98]" /> 100% free
-                  resources
-                </span>
-                <span className="flex items-center gap-1.5">
-                  <Check className="h-3.5 w-3.5 text-[#f4aa98]" /> Personalized
-                  with AI
-                </span>
-                <span className="flex items-center gap-1.5">
-                  <Check className="h-3.5 w-3.5 text-[#f4aa98]" /> Trusted
-                  platforms
-                </span>
+            </section>
+
+            <section className="relative mt-5 hidden overflow-hidden rounded-[28px] bg-[linear-gradient(120deg,#315b4c_0%,#274c40_58%,#3b5b4e_100%)] px-5 py-8 text-white shadow-[0_20px_60px_rgba(39,76,64,0.2)] sm:block sm:px-10 sm:py-9 lg:px-14 lg:py-10">
+              <div className="pointer-events-none absolute -right-20 -top-32 h-72 w-72 rounded-full border-[58px] border-white/[0.06]" />
+              <div className="pointer-events-none absolute -bottom-36 right-32 h-64 w-64 rounded-full bg-[#f4b29f]/15 blur-3xl" />
+              <div className="relative max-w-3xl">
+                <p className="mb-3 flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-[#f4aa98]">
+                  <Sparkles className="h-3.5 w-3.5" />
+                  {heroCopy.eyebrow}
+                </p>
+                <h1 className="font-display max-w-2xl text-4xl leading-[1.04] tracking-[-0.035em] sm:text-[44px] lg:text-[50px]">
+                  {heroCopy.title}
+                </h1>
+                <p className="mt-3 max-w-2xl text-sm leading-6 text-white/65 sm:text-[15px]">
+                  {heroCopy.description}
+                </p>
+                <div className="mt-5 rounded-2xl bg-white p-2 shadow-[0_14px_34px_rgba(0,0,0,0.16)] sm:p-2.5">
+                  <SearchBar
+                    value={activeTab === "search" ? searchQuery : roadmapQuery}
+                    onChange={
+                      activeTab === "search" ? setSearchQuery : setRoadmapQuery
+                    }
+                    onSubmit={
+                      activeTab === "search" ? handleSearch : handleGenerate
+                    }
+                    isLoading={
+                      activeTab === "search" ? isSearching : isGenerating
+                    }
+                    activeTab={activeTab}
+                  />
+                </div>
+                <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 text-[11px] text-white/55">
+                  <span className="flex items-center gap-1.5">
+                    <Check className="h-3.5 w-3.5 text-[#f4aa98]" /> 100% free
+                    resources
+                  </span>
+                  <span className="flex items-center gap-1.5">
+                    <Check className="h-3.5 w-3.5 text-[#f4aa98]" />{" "}
+                    Personalized with AI
+                  </span>
+                  <span className="flex items-center gap-1.5">
+                    <Check className="h-3.5 w-3.5 text-[#f4aa98]" /> Trusted
+                    platforms
+                  </span>
+                </div>
               </div>
-            </div>
-          </section>
+            </section>
+          </>
         )}
 
         {activeTab === "search" && (
