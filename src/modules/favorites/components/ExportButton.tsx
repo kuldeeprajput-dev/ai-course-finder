@@ -12,20 +12,24 @@ export interface ExportButtonProps {
 
 const PAGE_WIDTH = 210;
 const PAGE_HEIGHT = 297;
-const MARGIN = 20;
+const MARGIN = 18;
 const CONTENT_WIDTH = PAGE_WIDTH - MARGIN * 2;
-const HEADER_HEIGHT = 20;
-const BRUTAL_SHADOW_OFFSET = 3;
+const TOP_MARGIN = 16;
 
 const C = {
-  orange: [255, 99, 33] as [number, number, number],
-  black: [10, 10, 10] as [number, number, number],
-  gray: [107, 107, 107] as [number, number, number],
-  paper: [245, 240, 232] as [number, number, number],
+  bg: [247, 248, 245] as [number, number, number],
   white: [255, 255, 255] as [number, number, number],
-  red: [220, 38, 38] as [number, number, number],
+  black: [23, 33, 27] as [number, number, number],
+  gray: [104, 115, 108] as [number, number, number],
+  lightGray: [243, 245, 241] as [number, number, number],
+  border: [223, 229, 222] as [number, number, number],
+  headerBg: [242, 246, 244] as [number, number, number],
+  headerBorder: [214, 226, 219] as [number, number, number],
+  orange: [232, 93, 63] as [number, number, number],
+  orangeLight: [252, 235, 231] as [number, number, number],
   blue: [37, 99, 235] as [number, number, number],
   green: [22, 163, 74] as [number, number, number],
+  red: [220, 38, 38] as [number, number, number],
 };
 
 function getResourceColor(type: string): [number, number, number] {
@@ -42,7 +46,7 @@ function getResourceColor(type: string): [number, number, number] {
 }
 
 /**
- * Export PDF Button component using dynamic jsPDF document generation.
+ * Modern Export PDF Button component generating beautiful structured roadmap documents.
  */
 export function ExportButton({ roadmap }: ExportButtonProps) {
   const [isExporting, setIsExporting] = useState(false);
@@ -59,273 +63,346 @@ export function ExportButton({ roadmap }: ExportButtonProps) {
         format: "a4",
       });
 
-      let yPos = 0;
+      let yPos = TOP_MARGIN;
       let pageCount = 1;
 
-      const drawHeader = (isFirst: boolean, title?: string) => {
-        doc.setFillColor(...C.black);
-        doc.rect(0, 0, PAGE_WIDTH, HEADER_HEIGHT, "F");
+      const drawPageBackground = () => {
+        doc.setFillColor(...C.bg);
+        doc.rect(0, 0, PAGE_WIDTH, PAGE_HEIGHT, "F");
+      };
 
-        doc.setTextColor(...C.white);
-        doc.setFontSize(12);
-        doc.setFont("helvetica", "bold");
-        doc.text("Free Course Finder", MARGIN, 8);
-
-        doc.setFontSize(6);
-        doc.setFont("helvetica", "normal");
-        doc.setTextColor(180, 180, 180);
-        doc.text("AI-powered learning resource discovery", MARGIN, 14);
-
-        if (!isFirst && title) {
-          const shortTitle =
-            title.length > 40 ? title.substring(0, 40) + "..." : title;
-          doc.setTextColor(...C.white);
-          doc.setFontSize(8);
-          doc.text(shortTitle, PAGE_WIDTH - MARGIN, 8, { align: "right" });
-          doc.setFontSize(6);
-          doc.text(`Page ${pageCount}`, PAGE_WIDTH - MARGIN, 14, {
+      const drawHeader = (isFirst: boolean) => {
+        if (!isFirst) {
+          doc.setTextColor(...C.gray);
+          doc.setFontSize(8.5);
+          doc.setFont("helvetica", "normal");
+          doc.text("Coursefinder — Learning Roadmap", MARGIN, 12);
+          doc.text(`Page ${pageCount}`, PAGE_WIDTH - MARGIN, 12, {
             align: "right",
           });
+          doc.setDrawColor(...C.border);
+          doc.setLineWidth(0.3);
+          doc.line(MARGIN, 15, PAGE_WIDTH - MARGIN, 15);
         }
-
-        doc.setTextColor(...C.gray);
-        doc.setFontSize(6);
-        doc.text(
-          new Date().toLocaleDateString("en-US", {
-            year: "numeric",
-            month: "short",
-            day: "numeric",
-          }),
-          PAGE_WIDTH - MARGIN,
-          18,
-          { align: "right" },
-        );
       };
 
       const checkBreak = (needed: number) => {
-        if (yPos + needed > PAGE_HEIGHT - 25) {
+        if (yPos + needed > PAGE_HEIGHT - 20) {
           doc.addPage();
           pageCount++;
-          yPos = HEADER_HEIGHT + 8;
-          doc.setFillColor(...C.paper);
-          doc.rect(0, 0, PAGE_WIDTH, PAGE_HEIGHT, "F");
-          drawHeader(false, roadmap.title);
+          drawPageBackground();
+          drawHeader(false);
+          yPos = 22;
           return true;
         }
         return false;
       };
 
-      doc.setFillColor(...C.paper);
-      doc.rect(0, 0, PAGE_WIDTH, PAGE_HEIGHT, "F");
-      drawHeader(true);
+      drawPageBackground();
 
-      yPos = HEADER_HEIGHT + 10;
-
+      // Top Brand Header Banner
       doc.setFillColor(...C.orange);
-      doc.rect(
-        MARGIN - BRUTAL_SHADOW_OFFSET,
-        yPos - BRUTAL_SHADOW_OFFSET,
-        CONTENT_WIDTH + BRUTAL_SHADOW_OFFSET,
-        35,
-        "F",
+      doc.circle(MARGIN + 3, yPos + 3, 3, "F");
+      doc.setTextColor(...C.black);
+      doc.setFontSize(13.5);
+      doc.setFont("helvetica", "bold");
+      doc.text("Coursefinder", MARGIN + 8, yPos + 4.5);
+
+      doc.setFontSize(8.5);
+      doc.setFont("helvetica", "normal");
+      doc.setTextColor(...C.gray);
+      doc.text(
+        "AI-powered learning resource discovery",
+        MARGIN + 42,
+        yPos + 4.5,
       );
 
-      doc.setFillColor(...C.black);
-      doc.rect(MARGIN, yPos, CONTENT_WIDTH, 35, "F");
+      doc.text(
+        new Date().toLocaleDateString("en-US", {
+          year: "numeric",
+          month: "short",
+          day: "numeric",
+        }),
+        PAGE_WIDTH - MARGIN,
+        yPos + 4.5,
+        { align: "right" },
+      );
 
-      yPos += 5;
-      doc.setTextColor(255, 180, 150);
-      doc.setFontSize(7);
+      yPos += 13;
+
+      // Roadmap Header Card text splitting & dynamic height
+      doc.setFontSize(16);
       doc.setFont("helvetica", "bold");
-      doc.text("LEARNING ROADMAP", MARGIN + 4, yPos);
-      yPos += 6;
+      const titleLines = doc.splitTextToSize(roadmap.title, CONTENT_WIDTH - 16);
 
-      doc.setTextColor(...C.white);
-      doc.setFontSize(14);
-      doc.setFont("helvetica", "bold");
-      const titleLines = doc.splitTextToSize(roadmap.title, CONTENT_WIDTH - 8);
-      doc.text(titleLines, MARGIN + 4, yPos);
-      yPos += titleLines.length * 5 + 3;
-
-      doc.setTextColor(255, 255, 255, 0.8);
-      doc.setFontSize(8);
+      doc.setFontSize(9.5);
       doc.setFont("helvetica", "normal");
       const descLines = doc.splitTextToSize(
         roadmap.description,
-        CONTENT_WIDTH - 8,
+        CONTENT_WIDTH - 16,
       );
-      doc.text(descLines, MARGIN + 4, yPos);
-      yPos += descLines.length * 3.5 + 4;
 
-      doc.setFillColor(...C.white);
-      doc.setTextColor(...C.orange);
-      doc.setFontSize(7);
+      const durationText = `Duration: ${roadmap.totalDuration}`;
+      doc.setFontSize(7.5);
       doc.setFont("helvetica", "bold");
-      doc.roundedRect(MARGIN + 4, yPos, 50, 6, 1, 1, "F");
-      doc.setTextColor(...C.white);
-      doc.text(`Duration: ${roadmap.totalDuration}`, MARGIN + 6, yPos + 4);
+      const durationPillWidth = Math.max(
+        doc.getTextWidth(durationText) + 8,
+        45,
+      );
 
-      yPos = HEADER_HEIGHT + 10 + 42;
+      const headerCardHeight =
+        8 +
+        6 +
+        titleLines.length * 6.5 +
+        3 +
+        descLines.length * 4.5 +
+        6 +
+        7 +
+        6;
 
-      doc.setDrawColor(...C.black);
+      doc.setFillColor(...C.headerBg);
+      doc.setDrawColor(...C.headerBorder);
       doc.setLineWidth(0.4);
-      doc.line(MARGIN, yPos, PAGE_WIDTH - MARGIN, yPos);
-      yPos += 8;
+      doc.roundedRect(
+        MARGIN,
+        yPos,
+        CONTENT_WIDTH,
+        headerCardHeight,
+        3.5,
+        3.5,
+        "FD",
+      );
 
-      doc.setTextColor(...C.black);
-      doc.setFontSize(9);
+      let cardY = yPos + 8;
+
+      doc.setTextColor(...C.orange);
+      doc.setFontSize(7.5);
       doc.setFont("helvetica", "bold");
-      doc.text("LEARNING PATH", MARGIN, yPos);
-      yPos += 8;
+      doc.text("YOUR LEARNING ROADMAP", MARGIN + 8, cardY);
 
-      let prevBoxBottom = 0;
+      cardY += 6;
+      doc.setTextColor(...C.black);
+      doc.setFontSize(16);
+      doc.setFont("helvetica", "bold");
+      doc.text(titleLines, MARGIN + 8, cardY);
 
-      roadmap.steps.forEach((step, idx) => {
-        doc.setFontSize(11);
+      cardY += titleLines.length * 6.5 + 3;
+      doc.setTextColor(...C.gray);
+      doc.setFontSize(9.5);
+      doc.setFont("helvetica", "normal");
+      doc.text(descLines, MARGIN + 8, cardY);
+
+      cardY += descLines.length * 4.5 + 6;
+
+      // Duration Badge Pill
+      doc.setFillColor(...C.orangeLight);
+      doc.setDrawColor(...C.orange);
+      doc.setLineWidth(0.2);
+      doc.roundedRect(
+        MARGIN + 8,
+        cardY - 3.5,
+        durationPillWidth,
+        7,
+        1.5,
+        1.5,
+        "FD",
+      );
+      doc.setTextColor(...C.orange);
+      doc.setFontSize(7.5);
+      doc.setFont("helvetica", "bold");
+      doc.text(durationText, MARGIN + 12, cardY + 1.2);
+
+      yPos += headerCardHeight + 12;
+
+      // Learning Path Section Title
+      doc.setTextColor(...C.gray);
+      doc.setFontSize(8.5);
+      doc.setFont("helvetica", "bold");
+      doc.text("RECOMMENDED LEARNING PATH", MARGIN, yPos);
+      yPos += 7;
+
+      // Step Cards Loop
+      roadmap.steps.forEach((step) => {
+        doc.setFontSize(12);
         doc.setFont("helvetica", "bold");
         const stepTitleLines = doc.splitTextToSize(
           step.title,
-          CONTENT_WIDTH - 18,
+          CONTENT_WIDTH - 24,
         );
 
-        doc.setFontSize(8);
+        doc.setFontSize(9);
         doc.setFont("helvetica", "normal");
         const stepDescLines = doc.splitTextToSize(
           step.description,
-          CONTENT_WIDTH - 18,
+          CONTENT_WIDTH - 24,
         );
 
-        const titleHeight = stepTitleLines.length * 4.5;
-        const descHeight = stepDescLines.length * 3.5;
-        const resourcesStart =
-          12 + Math.max(titleHeight, 14) + 4 + descHeight + 6;
+        const titleHeight = stepTitleLines.length * 5.2;
+        const descHeight = stepDescLines.length * 4.2;
+        const cardContentHeight = 12 + titleHeight + 3 + descHeight + 6;
 
         let resourcesHeight = 0;
-        if (step.resources.length > 0) {
-          resourcesHeight += 5;
+        const MAX_TEXT_WIDTH = CONTENT_WIDTH - 44;
+
+        if (step.resources && step.resources.length > 0) {
+          resourcesHeight += 10;
           step.resources.forEach((res) => {
-            doc.setFontSize(8);
+            doc.setFontSize(9);
             const resTitleLines = doc.splitTextToSize(
               res.title,
-              CONTENT_WIDTH - 70,
+              MAX_TEXT_WIDTH,
             );
-            doc.setFontSize(6);
-            const urlLines = doc.splitTextToSize(res.url, CONTENT_WIDTH - 70);
-            resourcesHeight +=
-              Math.max(resTitleLines.length * 4, 8) + urlLines.length * 3 + 4;
+
+            doc.setFontSize(7);
+            const urlLines = doc.splitTextToSize(res.url, MAX_TEXT_WIDTH);
+
+            const rowHeight = Math.max(
+              resTitleLines.length * 4.2 + urlLines.length * 3.2 + 5,
+              13,
+            );
+            resourcesHeight += rowHeight + 3.5;
           });
         }
 
-        const boxHeight = resourcesStart + resourcesHeight + 8;
+        const boxHeight = cardContentHeight + resourcesHeight + 4;
 
-        checkBreak(boxHeight + 20);
+        checkBreak(boxHeight + 10);
 
-        doc.setFillColor(...C.black);
-        doc.rect(
-          MARGIN - BRUTAL_SHADOW_OFFSET,
-          yPos - BRUTAL_SHADOW_OFFSET,
-          CONTENT_WIDTH + BRUTAL_SHADOW_OFFSET,
-          boxHeight + BRUTAL_SHADOW_OFFSET,
-          "F",
-        );
-
+        // Main White Step Card
         doc.setFillColor(...C.white);
-        doc.setDrawColor(...C.black);
-        doc.setLineWidth(0.5);
-        doc.rect(MARGIN, yPos, CONTENT_WIDTH, boxHeight, "FD");
+        doc.setDrawColor(...C.border);
+        doc.setLineWidth(0.4);
+        doc.roundedRect(MARGIN, yPos, CONTENT_WIDTH, boxHeight, 3.5, 3.5, "FD");
 
-        if (idx > 0 && prevBoxBottom > 0) {
-          doc.setDrawColor(200, 200, 200);
-          doc.setLineWidth(0.8);
-          const lineX = MARGIN + 5;
-          for (let i = 0; i < 4; i++) {
-            const dotY = prevBoxBottom + 3 + i * 3;
-            if (dotY < yPos - 3) {
-              doc.setFillColor(...C.orange);
-              doc.circle(lineX, dotY, 1.2, "F");
-            }
-          }
-        }
-
+        // Step Number Badge Circle
         doc.setFillColor(...C.orange);
-        doc.circle(MARGIN + 6, yPos + 7, 5, "F");
-
+        doc.circle(MARGIN + 8, yPos + 9, 4.5, "F");
         doc.setTextColor(...C.white);
-        doc.setFontSize(10);
+        doc.setFontSize(9.5);
         doc.setFont("helvetica", "bold");
-        doc.text(String(step.step), MARGIN + 6, yPos + 8.5, {
+        doc.text(String(step.step), MARGIN + 8, yPos + 10.3, {
           align: "center",
         });
 
-        let contentY = yPos + 7;
+        // Step Title & Description
+        let stepY = yPos + 9;
         doc.setTextColor(...C.black);
-        doc.setFontSize(11);
+        doc.setFontSize(12);
         doc.setFont("helvetica", "bold");
-        doc.text(stepTitleLines, MARGIN + 14, contentY);
-        contentY += titleHeight + 4;
+        doc.text(stepTitleLines, MARGIN + 16, stepY);
 
+        stepY += titleHeight + 3;
         doc.setTextColor(...C.gray);
-        doc.setFontSize(8);
+        doc.setFontSize(9);
         doc.setFont("helvetica", "normal");
-        doc.text(stepDescLines, MARGIN + 14, contentY);
-        contentY += descHeight + 6;
+        doc.text(stepDescLines, MARGIN + 16, stepY);
 
-        if (step.resources.length > 0) {
-          doc.setDrawColor(...C.gray);
+        stepY += descHeight + 6;
+
+        // Structured Resources Section inside Step Card
+        if (step.resources && step.resources.length > 0) {
+          doc.setDrawColor(...C.border);
           doc.setLineWidth(0.3);
-          doc.line(MARGIN + 4, contentY, PAGE_WIDTH - MARGIN - 4, contentY);
-          contentY += 5;
+          doc.line(MARGIN + 6, stepY - 2, PAGE_WIDTH - MARGIN - 6, stepY - 2);
 
-          doc.setTextColor(...C.black);
-          doc.setFontSize(6);
+          doc.setTextColor(...C.gray);
+          doc.setFontSize(7.5);
           doc.setFont("helvetica", "bold");
-          doc.text("RESOURCES", MARGIN + 14, contentY);
-          contentY += 5;
+          doc.text("RECOMMENDED RESOURCES", MARGIN + 6, stepY + 3);
+          stepY += 7;
+
+          const BADGE_WIDTH = 26;
+          const TITLE_X = MARGIN + 36;
 
           step.resources.forEach((res) => {
             const resColor = getResourceColor(res.type);
+            const resTypeText = res.type.toUpperCase();
 
-            doc.setFillColor(...resColor);
-            doc.roundedRect(MARGIN + 14, contentY - 3, 16, 5, 0.5, 0.5, "F");
-            doc.setTextColor(...C.white);
-            doc.setFontSize(5);
+            doc.setFontSize(9);
             doc.setFont("helvetica", "bold");
-            doc.text(res.type.toUpperCase(), MARGIN + 15, contentY);
-
-            doc.setTextColor(...C.black);
-            doc.setFontSize(8);
-            doc.setFont("helvetica", "normal");
             const resTitleLines = doc.splitTextToSize(
               res.title,
-              CONTENT_WIDTH - 90,
+              MAX_TEXT_WIDTH,
             );
-            doc.text(resTitleLines, MARGIN + 33, contentY);
-            contentY += Math.max(resTitleLines.length * 4, 7);
 
-            doc.setTextColor(...C.blue);
+            doc.setFontSize(7);
+            doc.setFont("helvetica", "normal");
+            const urlLines = doc.splitTextToSize(res.url, MAX_TEXT_WIDTH);
+
+            const rowHeight = Math.max(
+              resTitleLines.length * 4.2 + urlLines.length * 3.2 + 5,
+              13,
+            );
+
+            // Light Container Box for Each Resource Row
+            doc.setFillColor(...C.lightGray);
+            doc.setDrawColor(...C.border);
+            doc.setLineWidth(0.2);
+            doc.roundedRect(
+              MARGIN + 6,
+              stepY,
+              CONTENT_WIDTH - 12,
+              rowHeight,
+              1.5,
+              1.5,
+              "FD",
+            );
+
+            // Fixed Width Centered Badge
+            doc.setFillColor(...resColor);
+            doc.roundedRect(
+              MARGIN + 9,
+              stepY + 3.5,
+              BADGE_WIDTH,
+              5.2,
+              1,
+              1,
+              "F",
+            );
+            doc.setTextColor(...C.white);
             doc.setFontSize(6);
-            const urlLines = doc.splitTextToSize(res.url, CONTENT_WIDTH - 90);
-            doc.text(urlLines, MARGIN + 33, contentY);
-            contentY += urlLines.length * 3 + 3;
+            doc.setFont("helvetica", "bold");
+            doc.text(resTypeText, MARGIN + 9 + BADGE_WIDTH / 2, stepY + 7, {
+              align: "center",
+            });
+
+            // Resource Title (Aligned perfectly at TITLE_X)
+            let textY = stepY + 4.5;
+            doc.setTextColor(...C.black);
+            doc.setFontSize(9);
+            doc.setFont("helvetica", "bold");
+            doc.text(resTitleLines, TITLE_X, textY);
+
+            // Resource URL (Aligned perfectly at TITLE_X)
+            textY += resTitleLines.length * 4.2 + 1;
+            doc.setTextColor(...C.blue);
+            doc.setFontSize(7);
+            doc.setFont("helvetica", "normal");
+            doc.text(urlLines, TITLE_X, textY);
+
+            stepY += rowHeight + 3.5;
           });
         }
 
-        prevBoxBottom = yPos + boxHeight;
-        yPos += boxHeight + 12;
+        yPos += boxHeight + 6;
       });
 
-      const footerY = PAGE_HEIGHT - 15;
-      doc.setDrawColor(...C.black);
+      // Document Footer Line
+      const footerY = PAGE_HEIGHT - 12;
+      doc.setDrawColor(...C.border);
       doc.setLineWidth(0.3);
-      doc.line(MARGIN, footerY - 5, PAGE_WIDTH - MARGIN, footerY - 5);
+      doc.line(MARGIN, footerY - 4, PAGE_WIDTH - MARGIN, footerY - 4);
 
       doc.setTextColor(...C.gray);
-      doc.setFontSize(7);
+      doc.setFontSize(7.5);
       doc.setFont("helvetica", "normal");
-      doc.text("Generated by Free Course Finder", MARGIN, footerY);
-      doc.text(new Date().toLocaleDateString(), PAGE_WIDTH - MARGIN, footerY, {
-        align: "right",
-      });
+      doc.text("Generated by Coursefinder", MARGIN, footerY);
+      doc.text(
+        `Page ${pageCount} of ${pageCount}`,
+        PAGE_WIDTH - MARGIN,
+        footerY,
+        { align: "right" },
+      );
 
       doc.save(`${roadmap.topic.replace(/[^a-z0-9]/gi, "_")}_roadmap.pdf`);
     } catch (error) {
