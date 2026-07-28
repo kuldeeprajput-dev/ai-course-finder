@@ -159,43 +159,43 @@ export function ChatDrawer({
   return (
     <>
       <div
-        className="fixed inset-0 bg-black/40 backdrop-blur-sm z-40 md:hidden"
+        className="fixed inset-0 bg-black/40 backdrop-blur-sm z-40 lg:hidden"
         onClick={onClose}
       />
       <div
         style={{
-          width: isMaximized ? "100vw" : `${width}px`,
-          minWidth: isMaximized ? "100vw" : `${MIN_WIDTH}px`,
+          width: isMaximized ? "100vw" : `min(${width}px, 100vw)`,
+          minWidth: isMaximized ? "100vw" : `min(${MIN_WIDTH}px, 100vw)`,
           maxWidth: "100vw",
         }}
         className={cn(
-          "fixed top-0 right-0 bottom-0 h-full z-[100] flex flex-col overflow-hidden bg-white shadow-2xl border-l border-[#dfe4de] transition-all duration-150 ease-out",
+          "fixed top-0 right-0 bottom-0 h-full z-[100] max-lg:h-[100dvh] flex flex-col overflow-hidden bg-white shadow-2xl border-l border-[#dfe4de] transition-all duration-150 ease-out",
           "w-full",
           isMaximized
             ? "left-0 rounded-none border-l-0"
-            : "rounded-l-2xl rounded-r-none md:rounded-l-2xl md:rounded-r-none",
+            : "rounded-l-2xl rounded-r-none md:rounded-l-2xl md:rounded-r-none max-sm:rounded-none max-sm:border-l-0",
         )}
       >
         {!isMaximized && (
           <div
             onMouseDown={handleMouseDown}
             title="Drag to resize and expand full screen"
-            className="hidden md:flex absolute top-0 left-0 bottom-0 w-1.5 cursor-ew-resize items-center justify-center hover:bg-brand-orange/30 group z-20 transition-colors"
+            className="hidden lg:flex absolute top-0 left-0 bottom-0 w-1.5 cursor-ew-resize items-center justify-center hover:bg-brand-orange/30 group z-20 transition-colors"
           >
             <div className="w-1 h-6 rounded-full bg-brand-gray/30 group-hover:bg-brand-orange group-hover:h-10 transition-all duration-150" />
           </div>
         )}
 
-        <div className="flex shrink-0 items-center justify-between border-b border-[#e5e9e4] px-4 py-3.5 pl-5">
-          <div className="flex items-center gap-3">
-            <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#fcebe7] text-brand-orange">
+        <div className="flex shrink-0 items-center justify-between border-b border-[#e5e9e4] px-4 py-3.5 pl-5 max-sm:px-3 max-sm:py-3 max-sm:pl-3">
+          <div className="flex items-center gap-3 max-sm:min-w-0 max-sm:gap-2">
+            <span className="flex h-10 w-10 items-center max-sm:h-9 max-sm:w-9 justify-center rounded-xl bg-[#fcebe7] text-brand-orange">
               <Bot className="h-5 w-5" />
             </span>
             <div>
-              <h2 className="font-semibold text-brand-black">
+              <h2 className="font-semibold text-brand-black max-sm:text-sm">
                 Learning assistant
               </h2>
-              <p className="text-xs text-brand-gray">
+              <p className="text-xs text-brand-gray max-sm:hidden">
                 Ask anything about your learning
               </p>
             </div>
@@ -215,7 +215,7 @@ export function ChatDrawer({
             <button
               type="button"
               onClick={() => setIsMaximized((prev) => !prev)}
-              className="rounded-lg p-2 text-brand-gray transition-colors hover:bg-brand-paper hover:text-brand-black"
+              className="hidden rounded-lg p-2 text-brand-gray transition-colors hover:bg-brand-paper hover:text-brand-black sm:inline-flex"
               title={isMaximized ? "Restore view" : "Maximize full screen"}
               aria-label={isMaximized ? "Restore view" : "Maximize full screen"}
             >
@@ -245,7 +245,7 @@ export function ChatDrawer({
           </div>
         </div>
 
-        <div className="flex-1 overflow-y-auto p-4 space-y-4 min-h-0 pl-6 flex flex-col">
+        <div className="flex-1 overflow-y-auto p-4 space-y-4 min-h-0 pl-6 flex flex-col max-sm:p-3">
           {messages.length === 0 && (
             <div className="flex flex-1 flex-col items-center justify-center py-12 text-center text-brand-gray my-auto">
               <span className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-paper">
@@ -266,7 +266,7 @@ export function ChatDrawer({
               <div
                 key={msg.id}
                 className={cn(
-                  "flex gap-3",
+                  "flex gap-3 max-sm:gap-2",
                   msg.role === "user" ? "flex-row-reverse" : "flex-row",
                 )}
               >
@@ -323,7 +323,7 @@ export function ChatDrawer({
 
         <form
           onSubmit={handleSubmit}
-          className="shrink-0 border-t border-[#e5e9e4] p-4 pl-6"
+          className="shrink-0 border-t border-[#e5e9e4] p-4 pl-6 max-sm:p-3 max-sm:pb-[max(0.75rem,env(safe-area-inset-bottom))]"
         >
           <div className="flex gap-2">
             <Input

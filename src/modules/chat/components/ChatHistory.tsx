@@ -120,7 +120,7 @@ export function ChatHistory({
                           e.stopPropagation();
                           onDeleteSession(session.id);
                         }}
-                        className="rounded-lg p-1.5 text-brand-gray hover:bg-red-50 hover:text-red-600 transition-colors opacity-0 group-hover:opacity-100"
+                        className="rounded-lg p-1.5 text-brand-gray hover:bg-red-50 hover:text-red-600 transition-colors opacity-100 lg:opacity-0 lg:group-hover:opacity-100"
                         title="Delete chat"
                         aria-label="Delete chat"
                       >
