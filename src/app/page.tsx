@@ -535,9 +535,19 @@ export default function Home() {
       </main>
 
       <footer className="border-t border-[#e3e8e2] bg-white">
-        <div className="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-7 text-sm text-brand-gray sm:flex-row sm:items-center sm:justify-between sm:px-6">
-          <p>Learn more. Spend less. Grow continuously.</p>
-          <p className="text-xs">
+        <div className="mx-auto flex max-w-7xl flex-col gap-1.5 px-4 py-3 text-xs text-brand-gray max-sm:pr-16 sm:flex-row sm:items-center sm:justify-between sm:gap-2 sm:px-6 sm:py-7 sm:text-sm">
+          <div className="flex items-center gap-2.5 sm:items-center">
+            <BrandMark className="h-7.5 w-7.5 shrink-0 sm:hidden" />
+            <div>
+              <p className="font-semibold text-brand-black sm:font-normal sm:text-brand-gray">
+                Learn more. Spend less. Grow continuously.
+              </p>
+              <p className="mt-0.5 text-[10px] text-brand-gray/80 sm:hidden">
+                Coursera · edX · MIT OCW · YouTube · and more
+              </p>
+            </div>
+          </div>
+          <p className="hidden text-xs text-brand-gray/80 sm:block">
             Coursera · edX · MIT OCW · YouTube · and more
           </p>
         </div>
