@@ -9,18 +9,18 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant = 'primary', size = 'md', children, ...props }, ref) => {
     const baseStyles =
-      'font-bold brutal-border transition-all duration-150 active:translate-x-0.5 active:translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed';
+      'inline-flex items-center justify-center rounded-xl font-semibold transition-all duration-200 disabled:opacity-45 disabled:cursor-not-allowed';
 
     const variants = {
-      primary: 'bg-brand-orange text-white shadow-brutal hover:shadow-none hover:-translate-x-0.5 hover:-translate-y-0.5',
-      secondary: 'bg-white text-brand-black shadow-brutal hover:shadow-none hover:-translate-x-0.5 hover:-translate-y-0.5',
-      ghost: 'bg-transparent text-brand-black hover:bg-brand-paper',
+      primary: 'bg-brand-orange text-white shadow-[0_8px_20px_rgba(232,93,63,0.2)] hover:bg-[#d94e32] hover:-translate-y-0.5',
+      secondary: 'border border-[#dce1db] bg-white text-brand-black hover:border-[#c5cdc6] hover:bg-brand-paper',
+      ghost: 'bg-transparent text-brand-black hover:bg-[#edf0eb]',
     };
 
     const sizes = {
-      sm: 'px-3 py-1.5 text-sm',
-      md: 'px-6 py-3',
-      lg: 'px-8 py-4 text-lg',
+      sm: 'px-3.5 py-2 text-sm',
+      md: 'px-5 py-3 text-sm',
+      lg: 'px-7 py-4 text-base',
     };
 
     return (

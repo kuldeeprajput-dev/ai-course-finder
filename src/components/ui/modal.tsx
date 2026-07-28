@@ -34,26 +34,26 @@ export function Modal({ isOpen, onClose, title, children, className }: ModalProp
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
-      <div className="absolute inset-0 bg-brand-black/50" onClick={onClose} />
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+      <div className="absolute inset-0 bg-brand-black/45 backdrop-blur-sm" onClick={onClose} />
       <div
         className={cn(
-          'relative brutal-border bg-white shadow-brutal-lg w-full max-w-lg max-h-[90vh] overflow-auto m-4',
+          'relative w-full max-w-lg max-h-[90vh] overflow-auto rounded-2xl border border-white/60 bg-white shadow-brutal-xl',
           className
         )}
       >
         {title && (
-          <div className="flex items-center justify-between p-4 border-b-2 border-brand-black">
-            <h2 className="text-xl font-bold">{title}</h2>
+          <div className="flex items-center justify-between border-b border-[#e5e9e4] px-5 py-4">
+            <h2 className="text-lg font-semibold tracking-tight">{title}</h2>
             <button
               onClick={onClose}
-              className="p-2 hover:bg-brand-paper rounded-sm transition-colors"
+              className="rounded-lg p-2 text-brand-gray transition-colors hover:bg-brand-paper hover:text-brand-black"
             >
               <X className="w-5 h-5" />
             </button>
           </div>
         )}
-        <div className="p-4">{children}</div>
+        <div className="p-5">{children}</div>
       </div>
     </div>
   );

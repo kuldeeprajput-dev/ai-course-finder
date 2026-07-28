@@ -14,8 +14,8 @@ export function Card({ children, className, hover = false, onClick }: CardProps)
   return (
     <div
       className={cn(
-        'brutal-border bg-white shadow-brutal p-6',
-        hover && 'cursor-pointer hover:shadow-none hover:-translate-x-0.5 hover:-translate-y-0.5 transition-all duration-150',
+        'brutal-border bg-white p-5 shadow-[0_8px_30px_rgba(23,33,27,0.055)] sm:p-6',
+        hover && 'cursor-pointer hover:-translate-y-1 hover:border-[#cbd2cb] hover:shadow-[0_18px_38px_rgba(23,33,27,0.1)] transition-all duration-200',
         className
       )}
       onClick={onClick}
@@ -40,7 +40,7 @@ interface CardTitleProps {
 }
 
 export function CardTitle({ children, className }: CardTitleProps) {
-  return <h3 className={cn('text-lg font-bold', className)}>{children}</h3>;
+  return <h3 className={cn('text-lg font-semibold tracking-[-0.015em]', className)}>{children}</h3>;
 }
 
 interface CardContentProps {
@@ -49,7 +49,7 @@ interface CardContentProps {
 }
 
 export function CardContent({ children, className }: CardContentProps) {
-  return <div className={cn('text-sm text-brand-gray', className)}>{children}</div>;
+  return <div className={cn('text-sm leading-relaxed text-brand-gray', className)}>{children}</div>;
 }
 
 interface LoadingSpinnerProps {
