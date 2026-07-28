@@ -1,7 +1,7 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { ArrowUpRight } from 'lucide-react';
 
 interface PopularTopicsProps {
   onSelect: (topic: string) => void;
@@ -21,9 +21,9 @@ const TOPICS = [
 
 export function PopularTopics({ onSelect, disabled }: PopularTopicsProps) {
   return (
-    <div className="space-y-3">
-      <p className="text-sm font-bold text-brand-gray uppercase tracking-wide">
-        Popular Topics
+    <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+      <p className="shrink-0 text-xs font-semibold uppercase tracking-[0.14em] text-brand-gray">
+        Popular now
       </p>
       <div className="flex flex-wrap gap-2">
         {TOPICS.map((topic) => (
@@ -32,12 +32,13 @@ export function PopularTopics({ onSelect, disabled }: PopularTopicsProps) {
             onClick={() => onSelect(topic.query)}
             disabled={disabled}
             className={cn(
-              'px-3 py-1.5 text-sm font-medium brutal-border bg-white',
-              'hover:bg-brand-orange hover:text-white transition-colors',
+              'group flex items-center gap-1.5 rounded-full border border-[#dce2dc] bg-white px-3.5 py-2 text-xs font-medium text-[#4f5a52]',
+              'hover:border-brand-orange/40 hover:bg-[#fff7f4] hover:text-brand-orange transition-colors',
               disabled && 'opacity-50 cursor-not-allowed'
             )}
           >
             {topic.label}
+            <ArrowUpRight className="h-3 w-3 opacity-40 transition group-hover:opacity-100" />
           </button>
         ))}
       </div>

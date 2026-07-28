@@ -2,7 +2,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Course } from "@/types";
-import { ExternalLink, Star, Clock, BookOpen, Heart } from "lucide-react";
+import { ArrowUpRight, Star, Clock, BookOpen, Heart } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface CourseCardProps {
@@ -21,43 +21,44 @@ export function CourseCard({
   showFavoriteButton = true,
 }: CourseCardProps) {
   return (
-    <Card hover onClick={onClick} className="h-full flex flex-col relative">
+    <Card hover onClick={onClick} className="group relative flex h-full flex-col overflow-hidden">
       <button
         onClick={(e) => {
           e.stopPropagation();
           onToggleFavorite?.();
         }}
         className={cn(
-          "absolute top-2 right-2 z-10",
-          "w-8 h-8 brutal-border bg-white",
-          "flex items-center justify-center",
-          "transition-all duration-150",
+          "absolute right-4 top-4 z-10",
+          "flex h-9 w-9 items-center justify-center rounded-full border border-[#e0e5df] bg-white",
+          "transition-all duration-200",
           showFavoriteButton ? "opacity-100" : "opacity-0",
           isFavorite
-            ? "text-red-500 hover:bg-red-100"
-            : "text-brand-gray hover:bg-brand-paper hover:text-red-500",
+            ? "border-red-100 bg-red-50 text-red-500"
+            : "text-brand-gray hover:border-red-100 hover:bg-red-50 hover:text-red-500",
         )}
         title={isFavorite ? "Remove from favorites" : "Add to favorites"}
       >
         <Heart className={cn("w-4 h-4", isFavorite && "fill-current")} />
       </button>
 
-      <CardHeader className="flex-1">
-        <div className="flex items-start justify-between gap-2 pr-8">
-          <CardTitle className="text-lg leading-tight">
+      <CardHeader className="flex-1 pr-11">
+        <div className="flex items-start gap-2">
+          <CardTitle className="line-clamp-2 text-[17px] leading-snug">
             {course.title}
           </CardTitle>
+        </div>
+        <div className="mt-3 flex items-center gap-2">
+          <span className="text-sm font-medium text-brand-orange">{course.provider}</span>
           {course.isFree && (
-            <span className="shrink-0 bg-green-500 text-white text-xs font-bold px-2 py-1">
-              FREE
+            <span className="rounded-full bg-emerald-50 px-2 py-1 text-[10px] font-bold uppercase tracking-wide text-emerald-700">
+              Free
             </span>
           )}
         </div>
-        <p className="text-sm text-brand-gray mt-2">{course.provider}</p>
       </CardHeader>
       <CardContent className="space-y-3">
-        <p className="text-sm line-clamp-3">{course.description}</p>
-        <div className="flex flex-wrap gap-3 text-xs">
+        <p className="line-clamp-3 min-h-[63px] text-sm leading-5 text-brand-gray">{course.description}</p>
+        <div className="flex flex-wrap gap-x-4 gap-y-2 border-t border-[#edf0ec] pt-4 text-xs">
           {course.rating && (
             <span className="flex items-center gap-1 text-amber-600">
               <Star className="w-3 h-3 fill-current" />
@@ -83,13 +84,12 @@ export function CourseCard({
           rel="noopener noreferrer"
           onClick={(e) => e.stopPropagation()}
           className={cn(
-            "flex items-center justify-center gap-2 w-full mt-4",
-            "brutal-border bg-brand-orange text-white font-bold px-4 py-2",
-            "hover:shadow-none hover:-translate-x-0.5 hover:-translate-y-0.5 transition-all duration-150",
+            "mt-4 flex w-full items-center justify-between rounded-xl bg-brand-paper px-4 py-3",
+            "text-sm font-semibold text-brand-black transition-colors group-hover:bg-brand-black group-hover:text-white",
           )}
         >
-          Visit Course
-          <ExternalLink className="w-4 h-4" />
+          View course
+          <ArrowUpRight className="h-4 w-4" />
         </a>
       </CardContent>
     </Card>

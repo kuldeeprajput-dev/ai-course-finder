@@ -17,37 +17,30 @@ interface FavoritesSectionProps {
 }
 
 export function FavoritesSection({ favorites, onRemove, suggestions }: FavoritesSectionProps) {
-  const favoriteCourses = favorites.map((f) => ({
-    title: f.title,
-    provider: f.provider,
-    url: f.url,
-    description: f.description || '',
-    isFree: true,
-    rating: f.rating,
-    duration: f.duration,
-    level: f.level,
-  }));
-
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <Heart className="w-5 h-5 text-red-500 fill-current" />
-          <h2 className="text-xl font-bold">Your Favorites</h2>
-          <span className="text-sm text-brand-gray">({favorites.length})</span>
+    <div className="space-y-8">
+      <div className="flex items-end justify-between">
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-brand-orange">Your learning library</p>
+          <div className="mt-1 flex items-center gap-2">
+            <h1 className="text-2xl font-semibold tracking-tight">Saved courses</h1>
+            <span className="rounded-full bg-brand-paper px-2.5 py-1 text-xs font-medium text-brand-gray">{favorites.length}</span>
+          </div>
         </div>
       </div>
 
       {favorites.length === 0 ? (
-        <div className="brutal-border bg-brand-paper p-8 text-center">
-          <Heart className="w-12 h-12 mx-auto mb-4 text-brand-gray opacity-50" />
-          <p className="text-brand-gray">No favorites yet.</p>
-          <p className="text-sm text-brand-gray mt-1">
-            Add courses to your favorites from the search results.
+        <div className="rounded-2xl border border-[#dfe5de] bg-white p-12 text-center">
+          <span className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-red-50 text-red-400">
+            <Heart className="h-6 w-6" />
+          </span>
+          <h2 className="mt-5 font-semibold">Nothing saved yet</h2>
+          <p className="mt-2 text-sm text-brand-gray">
+            Use the heart on any course to keep it close.
           </p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {favorites.map((fav) => (
             <div key={fav.id} className="relative">
               <CourseCard
@@ -61,16 +54,16 @@ export function FavoritesSection({ favorites, onRemove, suggestions }: Favorites
                   duration: fav.duration,
                   level: fav.level,
                 }}
-                onClick={() => onRemove(fav.id)}
+                showFavoriteButton={false}
               />
               <button
                 onClick={() => onRemove(fav.id)}
                 className={cn(
-                  'absolute top-2 right-2',
-                  'w-8 h-8 brutal-border bg-white',
+                  'absolute right-4 top-4 z-10',
+                  'h-9 w-9 rounded-full border border-red-100 bg-red-50',
                   'flex items-center justify-center',
                   'hover:bg-red-100 hover:text-red-600 transition-colors',
-                  'text-brand-gray'
+                  'text-red-500'
                 )}
                 title="Remove from favorites"
               >
@@ -81,19 +74,23 @@ export function FavoritesSection({ favorites, onRemove, suggestions }: Favorites
         </div>
       )}
 
-      <div className="border-t-2 border-brand-black pt-6">
+      <div className="border-t border-[#dfe5de] pt-7">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
-            <Sparkles className="w-5 h-5 text-brand-orange" />
-            <h3 className="text-lg font-bold">AI Suggestions</h3>
+            <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#fcebe7] text-brand-orange">
+              <Sparkles className="h-4 w-4" />
+            </span>
+            <div>
+              <h3 className="font-semibold">Picked for you</h3>
+              <p className="text-xs text-brand-gray">Recommendations based on your saved courses</p>
+            </div>
           </div>
           <button
             onClick={suggestions.onGetSuggestions}
             disabled={suggestions.isLoading || favorites.length === 0}
             className={cn(
-              'text-sm font-medium text-brand-orange',
-              'hover:underline disabled:opacity-50 disabled:cursor-not-allowed',
-              'flex items-center gap-1'
+              'flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-medium text-brand-orange',
+              'hover:bg-[#fff1ed] disabled:opacity-50 disabled:cursor-not-allowed',
             )}
           >
             {suggestions.isLoading ? (
@@ -111,7 +108,7 @@ export function FavoritesSection({ favorites, onRemove, suggestions }: Favorites
         </div>
 
         {suggestions.error && (
-          <div className="brutal-border border-red-500 bg-red-50 p-3 mb-4">
+          <div className="mb-4 rounded-xl border border-red-200 bg-red-50 p-3">
             <p className="text-sm text-red-600">{suggestions.error}</p>
           </div>
         )}
@@ -129,9 +126,9 @@ export function FavoritesSection({ favorites, onRemove, suggestions }: Favorites
                   target="_blank"
                   rel="noopener noreferrer"
                   className={cn(
-                    'brutal-border bg-white shadow-brutal p-4',
-                    'hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-none',
-                    'transition-all duration-150'
+                    'rounded-xl border border-[#dfe5de] bg-white p-4',
+                    'hover:-translate-y-0.5 hover:border-[#cbd3cb] hover:shadow-brutal',
+                    'transition-all duration-200'
                   )}
                 >
                   <div className="flex items-start justify-between gap-2 mb-2">
@@ -148,7 +145,7 @@ export function FavoritesSection({ favorites, onRemove, suggestions }: Favorites
           </div>
         ) : (
           !suggestions.isLoading && (
-            <div className="brutal-border bg-brand-paper p-4 text-center">
+            <div className="rounded-xl border border-[#e0e5df] bg-white p-5 text-center">
               <p className="text-sm text-brand-gray">
                 {favorites.length === 0
                   ? 'Add some favorites to get AI-powered suggestions.'

@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { Settings, MessageCircle, BookOpen, Heart } from "lucide-react";
+import { Settings, MessageCircle, Compass, Heart, Route } from "lucide-react";
 
 interface TabNavProps {
   activeTab: "search" | "roadmap" | "favorites";
@@ -17,41 +17,43 @@ export function TabNav({
   onOpenSettings,
 }: TabNavProps) {
   const tabs = [
-    { id: "search" as const, label: "Find Courses", icon: BookOpen },
-    { id: "roadmap" as const, label: "Roadmap", icon: BookOpen },
-    { id: "favorites" as const, label: "Favorites", icon: Heart },
+    { id: "search" as const, label: "Discover", icon: Compass },
+    { id: "roadmap" as const, label: "Roadmap", icon: Route },
+    { id: "favorites" as const, label: "Saved", icon: Heart },
   ];
 
   return (
-    <div className="flex items-stretch sm:items-center justify-between gap-4 p-3 sm:p-4 brutal-border bg-white shadow-brutal">
-      <div className="flex gap-2 overflow-x-auto pb-1 sm:pb-0 -mx-1 px-1 sm:mx-0 sm:px-0">
+    <div className="flex items-center justify-between gap-3">
+      <div className="scrollbar-hide flex max-w-full gap-1 overflow-x-auto rounded-xl border border-[#e1e6e0] bg-white p-1">
         {tabs.map((tab) => (
           <button
             key={tab.id}
             onClick={() => onTabChange(tab.id)}
+            aria-label={tab.label}
+            title={tab.label}
             className={cn(
-              "flex items-center gap-2 p-2 sm:p-3 font-bold brutal-border transition-all shrink-0",
+              "flex shrink-0 items-center gap-1.5 rounded-lg px-2 py-2 text-xs font-medium transition-all sm:gap-2 sm:px-4 sm:text-sm",
               activeTab === tab.id
-                ? "bg-brand-orange text-white shadow-none"
-                : "bg-white text-brand-black hover:bg-brand-paper",
+                ? "bg-brand-black text-white shadow-sm"
+                : "text-brand-gray hover:bg-brand-paper hover:text-brand-black",
             )}
           >
             <tab.icon className="w-4 h-4" />
-            <span className="hidden sm:inline">{tab.label}</span>
+            <span>{tab.label}</span>
           </button>
         ))}
       </div>
-      <div className="flex gap-2">
+      <div className="flex gap-1.5">
         <button
           onClick={onOpenChat}
-          className="p-2 sm:p-3 brutal-border bg-white hover:bg-brand-paper transition-colors"
+          className="rounded-xl border border-[#e1e6e0] bg-white p-2.5 text-brand-gray transition-colors hover:bg-brand-paper hover:text-brand-black"
           title="Chat with AI"
         >
           <MessageCircle className="w-4 h-4" />
         </button>
         <button
           onClick={onOpenSettings}
-          className="p-2 sm:p-3 brutal-border bg-white hover:bg-brand-paper transition-colors"
+          className="rounded-xl border border-[#e1e6e0] bg-white p-2.5 text-brand-gray transition-colors hover:bg-brand-paper hover:text-brand-black"
           title="Settings"
         >
           <Settings className="w-4 h-4" />
