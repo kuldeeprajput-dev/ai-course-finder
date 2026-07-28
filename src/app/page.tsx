@@ -362,21 +362,21 @@ export default function Home() {
               </div>
             </section>
 
-            <section className="relative mt-5 hidden overflow-hidden rounded-[28px] bg-[linear-gradient(120deg,#315b4c_0%,#274c40_58%,#3b5b4e_100%)] px-5 py-8 text-white shadow-[0_20px_60px_rgba(39,76,64,0.2)] sm:block sm:px-10 sm:py-9 lg:px-14 lg:py-10">
-              <div className="pointer-events-none absolute -right-20 -top-32 h-72 w-72 rounded-full border-[58px] border-white/[0.06]" />
-              <div className="pointer-events-none absolute -bottom-36 right-32 h-64 w-64 rounded-full bg-[#f4b29f]/15 blur-3xl" />
+            <section className="relative mt-5 hidden overflow-hidden rounded-[28px] border border-[#d6e2db] bg-gradient-to-r from-[#f2f6f4] via-[#fafcfb] to-white px-5 py-8 text-brand-black shadow-sm sm:block sm:px-10 sm:py-9 lg:px-14 lg:py-10">
+              <div className="pointer-events-none absolute -right-20 -top-32 h-72 w-72 rounded-full border-[58px] border-emerald-900/[0.04]" />
+              <div className="pointer-events-none absolute -bottom-36 right-32 h-64 w-64 rounded-full bg-brand-orange/10 blur-3xl" />
               <div className="relative max-w-3xl">
-                <p className="mb-3 flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-[#f4aa98]">
+                <p className="mb-3 flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.16em] text-brand-orange">
                   <Sparkles className="h-3.5 w-3.5" />
                   {heroCopy.eyebrow}
                 </p>
-                <h1 className="font-display max-w-2xl text-4xl leading-[1.04] tracking-[-0.035em] sm:text-[44px] lg:text-[50px]">
+                <h1 className="font-display max-w-2xl text-4xl font-bold leading-[1.08] tracking-[-0.035em] text-brand-black sm:text-[44px] lg:text-[50px]">
                   {heroCopy.title}
                 </h1>
-                <p className="mt-3 max-w-2xl text-sm leading-6 text-white/65 sm:text-[15px]">
+                <p className="mt-3 max-w-2xl text-sm leading-6 text-brand-gray sm:text-[15px]">
                   {heroCopy.description}
                 </p>
-                <div className="mt-5 rounded-2xl bg-white p-2 shadow-[0_14px_34px_rgba(0,0,0,0.16)] sm:p-2.5">
+                <div className="mt-5 rounded-2xl border border-[#dfe5de] bg-white p-2 shadow-[0_10px_30px_rgba(23,33,27,0.05)] sm:p-2.5">
                   <SearchBar
                     value={activeTab === "search" ? searchQuery : roadmapQuery}
                     onChange={
@@ -391,17 +391,17 @@ export default function Home() {
                     activeTab={activeTab}
                   />
                 </div>
-                <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 text-[11px] text-white/55">
+                <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 text-[11px] font-medium text-brand-gray">
                   <span className="flex items-center gap-1.5">
-                    <Check className="h-3.5 w-3.5 text-[#f4aa98]" /> 100% free
-                    resources
+                    <Check className="h-3.5 w-3.5 text-brand-orange" /> 100%
+                    free resources
                   </span>
                   <span className="flex items-center gap-1.5">
-                    <Check className="h-3.5 w-3.5 text-[#f4aa98]" />{" "}
+                    <Check className="h-3.5 w-3.5 text-brand-orange" />{" "}
                     Personalized with AI
                   </span>
                   <span className="flex items-center gap-1.5">
-                    <Check className="h-3.5 w-3.5 text-[#f4aa98]" /> Trusted
+                    <Check className="h-3.5 w-3.5 text-brand-orange" /> Trusted
                     platforms
                   </span>
                 </div>
