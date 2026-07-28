@@ -582,7 +582,6 @@ export default function Home() {
         onSendMessage={sendMessage}
         onOpenHistory={() => {
           setIsChatHistoryOpen(true);
-          setIsChatOpen(false);
         }}
         onNewChat={handleNewChat}
         isLoading={isChatLoading}

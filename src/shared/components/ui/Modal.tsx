@@ -43,7 +43,7 @@ export function Modal({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 max-sm:items-end max-sm:p-0">
+    <div className="fixed inset-0 z-[150] flex items-center justify-center p-4 max-sm:items-end max-sm:p-0">
       <div
         className="absolute inset-0 bg-brand-black/45 backdrop-blur-sm"
         onClick={onClose}
