@@ -22,7 +22,7 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "Coursefinder — Learn without limits",
+  title: "Coursenva — Learn without limits",
   description:
     "Discover high-quality free courses and build a personalized learning path with AI.",
   manifest: "/manifest.webmanifest",

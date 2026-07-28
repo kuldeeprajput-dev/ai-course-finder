@@ -1,5 +1,5 @@
 /**
- * Core domain types and data models for CourseFinder.
+ * Core domain types and data models for Coursenva.
  */
 
 export interface Course {

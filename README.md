@@ -1,4 +1,4 @@
-# Free Course Finder
+# Coursenva
 
 [![Live Demo](https://ai-course-finder-ivory.vercel.app/)](https://ai-course-finder-ivory.vercel.app/)
 

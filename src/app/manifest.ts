@@ -2,8 +2,8 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Coursefinder",
-    short_name: "Coursefinder",
+    name: "Coursenva",
+    short_name: "Coursenva",
     description:
       "Discover high-quality free courses and build personalized learning paths.",
     start_url: "/",

@@ -265,7 +265,7 @@ export default function Home() {
               Learn without limits
             </p>
             <h1 className="font-display mt-2 text-[34px] font-bold leading-none tracking-[-0.035em] text-brand-black">
-              coursefinder
+              coursenva
             </h1>
             <p className="mt-2.5 text-xs font-medium text-brand-gray">
               Preparing your personalized learning space…
@@ -275,7 +275,7 @@ export default function Home() {
           <div className="loading-progress mt-8" aria-hidden="true">
             <span />
           </div>
-          <span className="sr-only">Loading Coursefinder</span>
+          <span className="sr-only">Loading Coursenva</span>
         </div>
       </div>
     );
@@ -293,7 +293,7 @@ export default function Home() {
             <BrandMark className="h-10 w-10 shadow-[0_7px_16px_rgba(232,93,63,0.2)]" />
             <span className="text-left">
               <span className="block text-lg font-bold tracking-[-0.03em]">
-                coursefinder
+                coursenva
               </span>
               <span className="hidden text-[11px] font-medium text-brand-gray sm:block">
                 Curated learning, powered by AI
@@ -560,7 +560,7 @@ export default function Home() {
             <BrandMark className="h-7 w-7 shadow-[0_4px_12px_rgba(232,93,63,0.16)]" />
             <div>
               <span className="font-bold tracking-[-0.02em] text-brand-black">
-                coursefinder
+                coursenva
               </span>
               <span className="mx-2 text-brand-gray/40">•</span>
               <span className="text-brand-gray">
