@@ -15,6 +15,7 @@ import { ExportButton } from "@/components/features/export-button";
 import { LoadingSpinner } from "@/components/ui/card";
 import { Modal } from "@/components/ui/modal";
 import { Button } from "@/components/ui/button";
+import { BrandMark } from "@/components/ui/brand-mark";
 import { useCourseSearch, useRoadmap } from "@/hooks/use-search";
 import { useChat } from "@/hooks/use-chat";
 import { useChatHistory } from "@/hooks/use-chat-history";
@@ -26,7 +27,6 @@ import {
   ArrowUpRight,
   BookOpen,
   Check,
-  GraduationCap,
   Heart,
   Search,
   Sparkles,
@@ -210,16 +210,38 @@ export default function Home() {
 
   if (!isStateLoaded) {
     return (
-      <div className="fixed inset-0 z-[200] flex flex-col items-center justify-center bg-[linear-gradient(120deg,#1e382e_0%,#274c40_50%,#315b4c_100%)] text-white">
-        <div className="relative flex flex-col items-center gap-5">
-          <div className="relative flex h-16 w-16 items-center justify-center rounded-2xl bg-brand-orange text-white shadow-[0_0_50px_rgba(232,93,63,0.4)] animate-pulse">
-            <GraduationCap className="h-8 w-8" />
-            <div className="absolute -inset-2 rounded-3xl border border-brand-orange/30 animate-ping opacity-25" />
+      <div
+        className="loading-screen fixed inset-0 z-[200] flex items-center justify-center overflow-hidden text-white"
+        role="status"
+        aria-live="polite"
+        aria-busy="true"
+      >
+        <div className="loading-ambient loading-ambient-one" />
+        <div className="loading-ambient loading-ambient-two" />
+        <div className="loading-grid" />
+
+        <div className="relative flex w-full max-w-sm flex-col items-center px-8 text-center">
+          <div className="loading-mark-wrap">
+            <span className="loading-orbit" />
+            <BrandMark className="loading-mark h-[72px] w-[72px] shadow-[0_18px_45px_rgba(232,93,63,0.35)]" />
           </div>
-          <div className="text-center">
-            <h1 className="text-2xl font-bold tracking-tight text-white font-display">coursefinder</h1>
-            <p className="mt-1.5 text-xs text-white/65 tracking-widest uppercase font-medium">Restoring your workspace…</p>
+
+          <div className="mt-7">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#f5b09f]">
+              Learn without limits
+            </p>
+            <h1 className="font-display mt-2 text-[32px] leading-none tracking-[-0.035em] text-white">
+              coursefinder
+            </h1>
+            <p className="mt-3 text-sm text-white/55">
+              Preparing your learning space
+            </p>
           </div>
+
+          <div className="loading-progress mt-7" aria-hidden="true">
+            <span />
+          </div>
+          <span className="sr-only">Loading Coursefinder</span>
         </div>
       </div>
     );
@@ -234,9 +256,7 @@ export default function Home() {
             onClick={() => setActiveTab("search")}
             aria-label="Go to course search"
           >
-            <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-orange text-white shadow-[0_7px_16px_rgba(232,93,63,0.2)]">
-              <GraduationCap className="h-5 w-5" />
-            </span>
+            <BrandMark className="h-10 w-10 shadow-[0_7px_16px_rgba(232,93,63,0.2)]" />
             <span className="text-left">
               <span className="block text-lg font-bold tracking-[-0.03em]">
                 coursefinder
