@@ -101,8 +101,8 @@ export function CourseCard({
           rel="noopener noreferrer"
           onClick={(e) => e.stopPropagation()}
           className={cn(
-            "mt-4 flex w-full items-center justify-between rounded-xl bg-brand-paper px-4 py-3",
-            "text-sm font-semibold text-brand-black transition-colors group-hover:bg-brand-black group-hover:text-white",
+            "mt-4 flex w-full items-center justify-between rounded-xl bg-brand-orange/10 px-4 py-3",
+            "text-sm font-semibold text-brand-orange transition-colors hover:bg-brand-orange hover:text-white group-hover:bg-brand-orange group-hover:text-white",
           )}
         >
           View course

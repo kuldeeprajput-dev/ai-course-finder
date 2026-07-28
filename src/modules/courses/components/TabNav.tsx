@@ -38,7 +38,7 @@ export function TabNav({
             className={cn(
               "flex shrink-0 items-center gap-1.5 rounded-lg px-2 py-2 text-xs font-medium transition-all sm:gap-2 sm:px-4 sm:text-sm max-lg:min-h-11 max-sm:flex-1 max-sm:justify-center",
               activeTab === tab.id
-                ? "bg-brand-black text-white shadow-sm"
+                ? "bg-brand-orange text-white shadow-[0_4px_14px_rgba(232,93,63,0.25)]"
                 : "text-brand-gray hover:bg-brand-paper hover:text-brand-black",
             )}
           >
