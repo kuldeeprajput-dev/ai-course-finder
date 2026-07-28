@@ -1,14 +1,40 @@
 'use client';
 
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import { ChatMessage } from '@/types';
 import { useAISettings } from '@/providers/ai-settings';
+
+const ACTIVE_CHAT_STORAGE_KEY = 'free-course-finder-active-chat';
 
 export function useChat() {
   const { settings } = useAISettings();
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
   const abortControllerRef = useRef<AbortController | null>(null);
+
+  useEffect(() => {
+    try {
+      const stored = localStorage.getItem(ACTIVE_CHAT_STORAGE_KEY);
+      if (stored) {
+        setMessages(JSON.parse(stored));
+      }
+    } catch (e) {
+      console.error('Failed to load active chat from localStorage:', e);
+    } finally {
+      setIsLoaded(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (isLoaded) {
+      try {
+        localStorage.setItem(ACTIVE_CHAT_STORAGE_KEY, JSON.stringify(messages));
+      } catch (e) {
+        console.error('Failed to save active chat to localStorage:', e);
+      }
+    }
+  }, [messages, isLoaded]);
 
   const sendMessage = useCallback(
     async (content: string) => {
@@ -17,7 +43,7 @@ export function useChat() {
       }
 
       const userMessage: ChatMessage = {
-        id: `user-${Date.now()}`,
+        id: `user-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`,
         role: 'user',
         content,
         timestamp: Date.now(),
@@ -26,7 +52,7 @@ export function useChat() {
       setMessages((prev) => [...prev, userMessage]);
       setIsLoading(true);
 
-      const assistantMessageId = `assistant-${Date.now()}`;
+      const assistantMessageId = `assistant-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`;
       const assistantMessage: ChatMessage = {
         id: assistantMessageId,
         role: 'assistant',
@@ -104,6 +130,13 @@ export function useChat() {
     [messages, settings]
   );
 
+  const loadMessages = useCallback((newMessages: ChatMessage[]) => {
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+    }
+    setMessages(newMessages);
+  }, []);
+
   const clearMessages = useCallback(() => {
     if (abortControllerRef.current) {
       abortControllerRef.current.abort();
@@ -114,6 +147,7 @@ export function useChat() {
   return {
     messages,
     sendMessage,
+    loadMessages,
     clearMessages,
     isLoading,
   };

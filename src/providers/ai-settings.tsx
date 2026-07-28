@@ -13,10 +13,6 @@ const defaultSettings: AISettings = {
   primaryProvider: 'gemini',
 };
 
-function createPlainObject<T>(obj: T): T {
-  return JSON.parse(JSON.stringify(obj));
-}
-
 const AISettingsContext = createContext<AISettingsContextType | undefined>(undefined);
 
 const STORAGE_KEY = 'free-course-finder-settings';

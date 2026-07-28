@@ -28,16 +28,19 @@ export function useChatHistory() {
   }, [sessions, isLoaded]);
 
   const saveSession = useCallback((messages: ChatMessage[]) => {
-    if (messages.length === 0) return;
+    const validMessages = messages.filter(
+      (m) => m.content && m.content.trim() !== ''
+    );
+    if (validMessages.length === 0) return;
 
-    const firstUserMessage = messages.find((m) => m.role === 'user');
+    const firstUserMessage = validMessages.find((m) => m.role === 'user');
     const title = firstUserMessage?.content.slice(0, 50) || 'Chat';
     const titleSuffix = firstUserMessage && firstUserMessage.content.length > 50 ? '...' : '';
     
     const session: ChatSession = {
       id: `session-${Date.now()}`,
       title: title + titleSuffix,
-      messages,
+      messages: validMessages,
       createdAt: Date.now(),
       updatedAt: Date.now(),
     };
