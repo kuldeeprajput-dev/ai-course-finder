@@ -241,34 +241,38 @@ export default function Home() {
   if (!isStateLoaded) {
     return (
       <div
-        className="loading-screen fixed inset-0 z-[200] flex items-center justify-center overflow-hidden text-white"
+        className="loading-screen fixed inset-0 z-[200] flex items-center justify-center overflow-hidden text-brand-black"
         role="status"
         aria-live="polite"
         aria-busy="true"
       >
         <div className="loading-ambient loading-ambient-one" />
         <div className="loading-ambient loading-ambient-two" />
+        <div className="loading-ambient loading-ambient-three" />
         <div className="loading-grid" />
 
         <div className="relative flex w-full max-w-sm flex-col items-center px-8 text-center">
           <div className="loading-mark-wrap">
-            <span className="loading-orbit" />
-            <BrandMark className="loading-mark h-[72px] w-[72px] shadow-[0_18px_45px_rgba(232,93,63,0.35)]" />
+            <span className="loading-ripple loading-ripple-1" />
+            <span className="loading-ripple loading-ripple-2" />
+            <span className="loading-orbit-outer" />
+            <span className="loading-orbit-inner" />
+            <BrandMark className="loading-mark h-[72px] w-[72px] shadow-[0_18px_45px_rgba(232,93,63,0.3)]" />
           </div>
 
-          <div className="mt-7">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#f5b09f]">
+          <div className="mt-8">
+            <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-brand-orange">
               Learn without limits
             </p>
-            <h1 className="font-display mt-2 text-[32px] leading-none tracking-[-0.035em] text-white">
+            <h1 className="font-display mt-2 text-[34px] font-bold leading-none tracking-[-0.035em] text-brand-black">
               coursefinder
             </h1>
-            <p className="mt-3 text-sm text-white/55">
-              Preparing your learning space
+            <p className="mt-2.5 text-xs font-medium text-brand-gray">
+              Preparing your personalized learning space…
             </p>
           </div>
 
-          <div className="loading-progress mt-7" aria-hidden="true">
+          <div className="loading-progress mt-8" aria-hidden="true">
             <span />
           </div>
           <span className="sr-only">Loading Coursefinder</span>
