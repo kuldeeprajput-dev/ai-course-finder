@@ -311,8 +311,9 @@ export function ExportButton({ roadmap }: ExportButtonProps) {
           doc.text("RECOMMENDED RESOURCES", MARGIN + 6, stepY + 3);
           stepY += 7;
 
-          const BADGE_WIDTH = 26;
-          const TITLE_X = MARGIN + 36;
+          // Fixed 2-column layout parameters for resource alignment
+          const BADGE_WIDTH = 26; // Uniform width for resource type badges
+          const TITLE_X = MARGIN + 36; // Constant X alignment for resource titles and URLs
 
           step.resources.forEach((res) => {
             const resColor = getResourceColor(res.type);
