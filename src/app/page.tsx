@@ -1,28 +1,37 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { TabNav } from "@/components/features/tab-nav";
-import { SearchBar } from "@/components/features/search-bar";
-import { CourseCard } from "@/components/features/course-card";
-import { RoadmapView } from "@/components/features/roadmap-view";
-import { ChatDrawer } from "@/components/features/chat-drawer";
-import { ChatTrigger } from "@/components/features/chat-trigger";
-import { ChatHistory } from "@/components/features/chat-history";
-import { SettingsModal } from "@/components/features/settings-modal";
-import { PopularTopics } from "@/components/features/popular-topics";
-import { FavoritesSection } from "@/components/features/favorites-section";
-import { ExportButton } from "@/components/features/export-button";
-import { LoadingSpinner } from "@/components/ui/card";
-import { Modal } from "@/components/ui/modal";
-import { Button } from "@/components/ui/button";
-import { BrandMark } from "@/components/ui/brand-mark";
-import { useCourseSearch, useRoadmap } from "@/hooks/use-search";
-import { useChat } from "@/hooks/use-chat";
-import { useChatHistory } from "@/hooks/use-chat-history";
-import { useFavorites } from "@/hooks/use-favorites";
-import { useSuggestions } from "@/hooks/use-suggestions";
-import { useAISettings } from "@/providers/ai-settings";
-import { Course, ChatSession } from "@/types";
+import {
+  SearchBar,
+  CourseCard,
+  PopularTopics,
+  TabNav,
+  useCourseSearch,
+  useSuggestions,
+} from "@/modules/courses";
+import { RoadmapView, useRoadmap } from "@/modules/roadmap";
+import {
+  ChatDrawer,
+  ChatTrigger,
+  ChatHistory,
+  SettingsModal,
+  useChat,
+  useChatHistory,
+} from "@/modules/chat";
+import {
+  FavoritesSection,
+  ExportButton,
+  useFavorites,
+} from "@/modules/favorites";
+import {
+  BrandMark,
+  Button,
+  LoadingSpinner,
+  Modal,
+  useAISettings,
+  Course,
+  ChatSession,
+} from "@/shared";
 import {
   ArrowUpRight,
   BookOpen,
@@ -49,22 +58,34 @@ export default function Home() {
 
   useEffect(() => {
     try {
-      const savedSearchQuery = localStorage.getItem("free-course-finder-search-query");
+      const savedSearchQuery = localStorage.getItem(
+        "free-course-finder-search-query",
+      );
       if (savedSearchQuery) setSearchQuery(savedSearchQuery);
 
-      const savedRoadmapQuery = localStorage.getItem("free-course-finder-roadmap-query");
+      const savedRoadmapQuery = localStorage.getItem(
+        "free-course-finder-roadmap-query",
+      );
       if (savedRoadmapQuery) setRoadmapQuery(savedRoadmapQuery);
 
-      const savedActiveTab = localStorage.getItem("free-course-finder-active-tab") as Tab | null;
+      const savedActiveTab = localStorage.getItem(
+        "free-course-finder-active-tab",
+      ) as Tab | null;
       if (savedActiveTab) setActiveTab(savedActiveTab);
 
-      const savedHasSearched = localStorage.getItem("free-course-finder-has-searched");
+      const savedHasSearched = localStorage.getItem(
+        "free-course-finder-has-searched",
+      );
       if (savedHasSearched) setHasSearched(JSON.parse(savedHasSearched));
 
-      const savedSessionId = localStorage.getItem("free-course-finder-current-session-id");
+      const savedSessionId = localStorage.getItem(
+        "free-course-finder-current-session-id",
+      );
       if (savedSessionId) setCurrentSessionId(savedSessionId);
 
-      const savedIsChatOpen = localStorage.getItem("free-course-finder-is-chat-open");
+      const savedIsChatOpen = localStorage.getItem(
+        "free-course-finder-is-chat-open",
+      );
       if (savedIsChatOpen) setIsChatOpen(JSON.parse(savedIsChatOpen));
     } catch (e) {
       console.error("Failed to load page queries from localStorage:", e);
@@ -93,20 +114,29 @@ export default function Home() {
 
   useEffect(() => {
     if (isStateLoaded) {
-      localStorage.setItem("free-course-finder-has-searched", JSON.stringify(hasSearched));
+      localStorage.setItem(
+        "free-course-finder-has-searched",
+        JSON.stringify(hasSearched),
+      );
     }
   }, [hasSearched, isStateLoaded]);
 
   useEffect(() => {
     if (isStateLoaded) {
-      localStorage.setItem("free-course-finder-is-chat-open", JSON.stringify(isChatOpen));
+      localStorage.setItem(
+        "free-course-finder-is-chat-open",
+        JSON.stringify(isChatOpen),
+      );
     }
   }, [isChatOpen, isStateLoaded]);
 
   useEffect(() => {
     if (isStateLoaded) {
       if (currentSessionId) {
-        localStorage.setItem("free-course-finder-current-session-id", currentSessionId);
+        localStorage.setItem(
+          "free-course-finder-current-session-id",
+          currentSessionId,
+        );
       } else {
         localStorage.removeItem("free-course-finder-current-session-id");
       }
@@ -299,11 +329,15 @@ export default function Home() {
               <div className="mt-5 rounded-2xl bg-white p-2 shadow-[0_14px_34px_rgba(0,0,0,0.16)] sm:p-2.5">
                 <SearchBar
                   value={activeTab === "search" ? searchQuery : roadmapQuery}
-                  onChange={activeTab === "search" ? setSearchQuery : setRoadmapQuery}
+                  onChange={
+                    activeTab === "search" ? setSearchQuery : setRoadmapQuery
+                  }
                   onSubmit={
                     activeTab === "search" ? handleSearch : handleGenerate
                   }
-                  isLoading={activeTab === "search" ? isSearching : isGenerating}
+                  isLoading={
+                    activeTab === "search" ? isSearching : isGenerating
+                  }
                   activeTab={activeTab}
                 />
               </div>
@@ -354,7 +388,8 @@ export default function Home() {
                     </h2>
                   </div>
                   <span className="text-sm text-brand-gray">
-                    {courses.length} {courses.length === 1 ? "course" : "courses"}
+                    {courses.length}{" "}
+                    {courses.length === 1 ? "course" : "courses"}
                   </span>
                 </div>
                 <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -372,9 +407,12 @@ export default function Home() {
             ) : hasSearched ? (
               <div className="rounded-2xl border border-[#e2e7e1] bg-white py-14 text-center">
                 <Search className="mx-auto h-8 w-8 text-brand-gray/45" />
-                <h2 className="mt-4 font-semibold">No matching courses found</h2>
+                <h2 className="mt-4 font-semibold">
+                  No matching courses found
+                </h2>
                 <p className="mt-1 text-sm text-brand-gray">
-                  Try a broader topic or choose one of the popular searches above.
+                  Try a broader topic or choose one of the popular searches
+                  above.
                 </p>
               </div>
             ) : (
@@ -448,7 +486,9 @@ export default function Home() {
       <footer className="border-t border-[#e3e8e2] bg-white">
         <div className="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-7 text-sm text-brand-gray sm:flex-row sm:items-center sm:justify-between sm:px-6">
           <p>Learn more. Spend less. Grow continuously.</p>
-          <p className="text-xs">Coursera · edX · MIT OCW · YouTube · and more</p>
+          <p className="text-xs">
+            Coursera · edX · MIT OCW · YouTube · and more
+          </p>
         </div>
       </footer>
 
@@ -524,7 +564,9 @@ export default function Home() {
                       : ""
                   }`}
                 />
-                {isFavorite(selectedCourse.url) ? "Remove saved" : "Save course"}
+                {isFavorite(selectedCourse.url)
+                  ? "Remove saved"
+                  : "Save course"}
               </Button>
               <a
                 href={selectedCourse.url}
