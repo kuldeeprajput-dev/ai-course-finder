@@ -29,20 +29,20 @@ export function SettingsModal({ isOpen, onClose, settings, onSave }: SettingsMod
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="Settings">
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form onSubmit={handleSubmit} className="space-y-7">
         <div className="space-y-4">
           <div className="flex items-center gap-2 mb-2">
             <Sparkles className="w-5 h-5 text-brand-orange" />
-            <h3 className="font-bold">AI Provider</h3>
+            <h3 className="font-semibold">AI provider</h3>
           </div>
           <div className="flex gap-2">
             <button
               type="button"
               onClick={() => setFormData({ ...formData, primaryProvider: 'gemini' })}
-              className={`flex-1 brutal-border p-3 text-center font-bold transition-all ${
+              className={`flex-1 rounded-xl border p-3 text-center text-sm font-semibold transition-all ${
                 formData.primaryProvider === 'gemini'
-                  ? 'bg-brand-orange text-white shadow-none -translate-x-0.5 -translate-y-0.5'
-                  : 'bg-white hover:bg-brand-paper'
+                  ? 'border-brand-orange bg-[#fff2ee] text-brand-orange'
+                  : 'border-[#dfe4de] bg-white hover:bg-brand-paper'
               }`}
             >
               Gemini
@@ -50,10 +50,10 @@ export function SettingsModal({ isOpen, onClose, settings, onSave }: SettingsMod
             <button
               type="button"
               onClick={() => setFormData({ ...formData, primaryProvider: 'mistral' })}
-              className={`flex-1 brutal-border p-3 text-center font-bold transition-all ${
+              className={`flex-1 rounded-xl border p-3 text-center text-sm font-semibold transition-all ${
                 formData.primaryProvider === 'mistral'
-                  ? 'bg-brand-orange text-white shadow-none -translate-x-0.5 -translate-y-0.5'
-                  : 'bg-white hover:bg-brand-paper'
+                  ? 'border-brand-orange bg-[#fff2ee] text-brand-orange'
+                  : 'border-[#dfe4de] bg-white hover:bg-brand-paper'
               }`}
             >
               Mistral
@@ -64,11 +64,11 @@ export function SettingsModal({ isOpen, onClose, settings, onSave }: SettingsMod
         <div className="space-y-4">
           <div className="flex items-center gap-2 mb-2">
             <Key className="w-5 h-5 text-brand-orange" />
-            <h3 className="font-bold">API Keys</h3>
+            <h3 className="font-semibold">AI access</h3>
           </div>
           <div className="space-y-3">
             <div>
-              <label className="block text-sm font-bold mb-1">Gemini API Key</label>
+              <label className="mb-1.5 block text-xs font-medium text-brand-gray">Gemini API key</label>
               <Input
                 type="password"
                 value={formData.geminiApiKey || ''}
@@ -77,7 +77,7 @@ export function SettingsModal({ isOpen, onClose, settings, onSave }: SettingsMod
               />
             </div>
             <div>
-              <label className="block text-sm font-bold mb-1">Mistral API Key</label>
+              <label className="mb-1.5 block text-xs font-medium text-brand-gray">Mistral API key</label>
               <Input
                 type="password"
                 value={formData.mistralApiKey || ''}
@@ -91,11 +91,11 @@ export function SettingsModal({ isOpen, onClose, settings, onSave }: SettingsMod
         <div className="space-y-4">
           <div className="flex items-center gap-2 mb-2">
             <Globe className="w-5 h-5 text-brand-orange" />
-            <h3 className="font-bold">Search API Keys (Optional)</h3>
+            <h3 className="font-semibold">Search access <span className="font-normal text-brand-gray">(optional)</span></h3>
           </div>
           <div className="space-y-3">
             <div>
-              <label className="block text-sm font-bold mb-1">Tavily API Key</label>
+              <label className="mb-1.5 block text-xs font-medium text-brand-gray">Tavily API key</label>
               <Input
                 type="password"
                 value={formData.tavilyApiKey || ''}
@@ -104,7 +104,7 @@ export function SettingsModal({ isOpen, onClose, settings, onSave }: SettingsMod
               />
             </div>
             <div>
-              <label className="block text-sm font-bold mb-1">Serper API Key</label>
+              <label className="mb-1.5 block text-xs font-medium text-brand-gray">Serper API key</label>
               <Input
                 type="password"
                 value={formData.serperApiKey || ''}
@@ -115,7 +115,7 @@ export function SettingsModal({ isOpen, onClose, settings, onSave }: SettingsMod
           </div>
         </div>
 
-        <div className="flex gap-2 pt-4">
+        <div className="flex gap-2 border-t border-[#e5e9e4] pt-5">
           <Button type="button" variant="secondary" onClick={onClose} className="flex-1">
             Cancel
           </Button>

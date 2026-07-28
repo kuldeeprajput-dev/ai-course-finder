@@ -72,23 +72,32 @@ export function ChatHistory({
           <>
             <div className="space-y-2 max-h-[400px] overflow-y-auto">
               {sessions.map((session) => (
-                <button
+                <div
                   key={session.id}
+                  role="button"
+                  tabIndex={0}
                   onClick={() => {
                     onSelectSession(session);
                     onClose();
                   }}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      onSelectSession(session);
+                      onClose();
+                    }
+                  }}
                   className={cn(
-                    'w-full text-left brutal-border bg-white p-3',
+                    'w-full rounded-xl border border-[#dfe4de] bg-white p-3 text-left cursor-pointer',
                     'hover:bg-brand-paper transition-colors group'
                   )}
                 >
                   <div className="flex items-start justify-between gap-2">
                     <div className="flex-1 min-w-0">
-                      <p className="font-medium truncate pr-2">{session.title}</p>
-                      <div className="flex items-center gap-3 mt-1 text-xs text-brand-gray">
+                      <p className="truncate pr-2 text-sm font-semibold text-brand-black">{session.title}</p>
+                      <div className="flex items-center gap-3 mt-1.5 text-xs text-brand-gray">
                         <span className="flex items-center gap-1">
-                          <MessageCircle className="w-3 h-3" />
+                          <MessageCircle className="w-3 h-3 text-brand-orange" />
                           {session.messages.length} messages
                         </span>
                         <span className="flex items-center gap-1">
@@ -99,24 +108,26 @@ export function ChatHistory({
                     </div>
                     <div className="flex items-center gap-1">
                       <button
+                        type="button"
                         onClick={(e) => {
                           e.stopPropagation();
                           onDeleteSession(session.id);
                         }}
-                        className="p-1.5 hover:bg-red-100 hover:text-red-600 transition-colors opacity-0 group-hover:opacity-100"
+                        className="rounded-lg p-1.5 text-brand-gray hover:bg-red-50 hover:text-red-600 transition-colors opacity-0 group-hover:opacity-100"
                         title="Delete chat"
+                        aria-label="Delete chat"
                       >
                         <Trash2 className="w-4 h-4" />
                       </button>
-                      <ChevronRight className="w-4 h-4 text-brand-gray" />
+                      <ChevronRight className="w-4 h-4 text-brand-gray group-hover:text-brand-black group-hover:translate-x-0.5 transition-all" />
                     </div>
                   </div>
-                </button>
+                </div>
               ))}
             </div>
 
             {sessions.length > 0 && (
-              <div className="pt-4 border-t-2 border-brand-black">
+              <div className="border-t border-[#e5e9e4] pt-4">
                 <Button
                   onClick={handleClearAll}
                   variant={confirmClear ? 'primary' : 'secondary'}
