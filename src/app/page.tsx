@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { TabNav } from "@/components/features/tab-nav";
 import { SearchBar } from "@/components/features/search-bar";
 import { CourseCard } from "@/components/features/course-card";
@@ -22,19 +22,96 @@ import { useFavorites } from "@/hooks/use-favorites";
 import { useSuggestions } from "@/hooks/use-suggestions";
 import { useAISettings } from "@/providers/ai-settings";
 import { Course, ChatSession } from "@/types";
-import { GraduationCap, Sparkles } from "lucide-react";
+import {
+  ArrowUpRight,
+  BookOpen,
+  Check,
+  GraduationCap,
+  Heart,
+  Search,
+  Sparkles,
+} from "lucide-react";
+
+type Tab = "search" | "roadmap" | "favorites";
 
 export default function Home() {
   const { settings, updateSettings } = useAISettings();
-  const [query, setQuery] = useState("");
-  const [activeTab, setActiveTab] = useState<
-    "search" | "roadmap" | "favorites"
-  >("search");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [roadmapQuery, setRoadmapQuery] = useState("");
+  const [activeTab, setActiveTab] = useState<Tab>("search");
+  const [hasSearched, setHasSearched] = useState(false);
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isChatHistoryOpen, setIsChatHistoryOpen] = useState(false);
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
   const [currentSessionId, setCurrentSessionId] = useState<string | null>(null);
+  const [isStateLoaded, setIsStateLoaded] = useState(false);
+
+  useEffect(() => {
+    try {
+      const savedSearchQuery = localStorage.getItem("free-course-finder-search-query");
+      if (savedSearchQuery) setSearchQuery(savedSearchQuery);
+
+      const savedRoadmapQuery = localStorage.getItem("free-course-finder-roadmap-query");
+      if (savedRoadmapQuery) setRoadmapQuery(savedRoadmapQuery);
+
+      const savedActiveTab = localStorage.getItem("free-course-finder-active-tab") as Tab | null;
+      if (savedActiveTab) setActiveTab(savedActiveTab);
+
+      const savedHasSearched = localStorage.getItem("free-course-finder-has-searched");
+      if (savedHasSearched) setHasSearched(JSON.parse(savedHasSearched));
+
+      const savedSessionId = localStorage.getItem("free-course-finder-current-session-id");
+      if (savedSessionId) setCurrentSessionId(savedSessionId);
+
+      const savedIsChatOpen = localStorage.getItem("free-course-finder-is-chat-open");
+      if (savedIsChatOpen) setIsChatOpen(JSON.parse(savedIsChatOpen));
+    } catch (e) {
+      console.error("Failed to load page queries from localStorage:", e);
+    } finally {
+      setIsStateLoaded(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (isStateLoaded) {
+      localStorage.setItem("free-course-finder-search-query", searchQuery);
+    }
+  }, [searchQuery, isStateLoaded]);
+
+  useEffect(() => {
+    if (isStateLoaded) {
+      localStorage.setItem("free-course-finder-roadmap-query", roadmapQuery);
+    }
+  }, [roadmapQuery, isStateLoaded]);
+
+  useEffect(() => {
+    if (isStateLoaded) {
+      localStorage.setItem("free-course-finder-active-tab", activeTab);
+    }
+  }, [activeTab, isStateLoaded]);
+
+  useEffect(() => {
+    if (isStateLoaded) {
+      localStorage.setItem("free-course-finder-has-searched", JSON.stringify(hasSearched));
+    }
+  }, [hasSearched, isStateLoaded]);
+
+  useEffect(() => {
+    if (isStateLoaded) {
+      localStorage.setItem("free-course-finder-is-chat-open", JSON.stringify(isChatOpen));
+    }
+  }, [isChatOpen, isStateLoaded]);
+
+  useEffect(() => {
+    if (isStateLoaded) {
+      if (currentSessionId) {
+        localStorage.setItem("free-course-finder-current-session-id", currentSessionId);
+      } else {
+        localStorage.removeItem("free-course-finder-current-session-id");
+      }
+    }
+  }, [currentSessionId, isStateLoaded]);
 
   const {
     courses,
@@ -51,6 +128,7 @@ export default function Home() {
   const {
     messages,
     sendMessage,
+    loadMessages,
     isLoading: isChatLoading,
     clearMessages,
   } = useChat();
@@ -73,16 +151,22 @@ export default function Home() {
 
   const handleSearch = (e?: React.FormEvent) => {
     e?.preventDefault();
-    if (query.trim()) search(query.trim());
+    if (!searchQuery.trim()) return;
+    setHasSearched(true);
+    search(searchQuery.trim());
   };
 
-  const handleAction = (q: string) => {
-    setQuery(q);
-    search(q);
+  const handleAction = (topic: string) => {
+    setSearchQuery(topic);
+    setHasSearched(true);
+    search(topic);
     setActiveTab("search");
   };
 
-  const handleGenerate = () => query.trim() && generate(query.trim());
+  const handleGenerate = (e?: React.FormEvent) => {
+    e?.preventDefault();
+    if (roadmapQuery.trim()) generate(roadmapQuery.trim());
+  };
 
   const handleChatClose = () => {
     if (messages.length > 0 && isHistoryLoaded) {
@@ -93,31 +177,83 @@ export default function Home() {
     setIsChatOpen(false);
   };
 
-  const handleSessionSelect = (session: ChatSession) => {
+  const handleNewChat = () => {
+    if (messages.length > 0 && isHistoryLoaded) {
+      const id = saveSession(messages);
+      if (id && currentSessionId) updateSession(currentSessionId, messages);
+    }
     clearMessages();
-    session.messages.forEach((m) => sendMessage(m.content));
+    setCurrentSessionId(null);
+  };
+
+  const handleSessionSelect = (session: ChatSession) => {
+    loadMessages(session.messages);
     setCurrentSessionId(session.id);
     setIsChatHistoryOpen(false);
     setIsChatOpen(true);
   };
 
+  const heroCopy =
+    activeTab === "search"
+      ? {
+          eyebrow: "Learn without limits",
+          title: "What do you want to learn?",
+          description:
+            "Search trusted platforms and find high-quality courses that fit your goals—completely free.",
+        }
+      : {
+          eyebrow: "Your personalized path",
+          title: "Turn curiosity into a clear plan.",
+          description:
+            "Choose a skill or subject and get a practical, step-by-step learning roadmap in seconds.",
+        };
+
+  if (!isStateLoaded) {
+    return (
+      <div className="fixed inset-0 z-[200] flex flex-col items-center justify-center bg-[linear-gradient(120deg,#1e382e_0%,#274c40_50%,#315b4c_100%)] text-white">
+        <div className="relative flex flex-col items-center gap-5">
+          <div className="relative flex h-16 w-16 items-center justify-center rounded-2xl bg-brand-orange text-white shadow-[0_0_50px_rgba(232,93,63,0.4)] animate-pulse">
+            <GraduationCap className="h-8 w-8" />
+            <div className="absolute -inset-2 rounded-3xl border border-brand-orange/30 animate-ping opacity-25" />
+          </div>
+          <div className="text-center">
+            <h1 className="text-2xl font-bold tracking-tight text-white font-display">coursefinder</h1>
+            <p className="mt-1.5 text-xs text-white/65 tracking-widest uppercase font-medium">Restoring your workspace…</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="min-h-screen flex flex-col">
-      <header className="bg-brand-black text-white py-4 sm:py-6 px-3 sm:px-4">
-        <div className="max-w-6xl mx-auto flex items-center gap-3">
-          <GraduationCap className="w-8 h-8 sm:w-10 sm:h-10 text-brand-orange" />
-          <div>
-            <h1 className="text-xl sm:text-2xl font-bold">
-              Free Course Finder
-            </h1>
-            <p className="text-xs sm:text-sm text-white/60 font-mono">
-              AI-powered discovery
-            </p>
+    <div className="flex min-h-screen flex-col">
+      <header className="border-b border-[#e5e9e4] bg-white/85 backdrop-blur-xl">
+        <div className="mx-auto flex h-[72px] w-full max-w-7xl items-center justify-between px-4 sm:px-6">
+          <button
+            className="flex items-center gap-3"
+            onClick={() => setActiveTab("search")}
+            aria-label="Go to course search"
+          >
+            <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-orange text-white shadow-[0_7px_16px_rgba(232,93,63,0.2)]">
+              <GraduationCap className="h-5 w-5" />
+            </span>
+            <span className="text-left">
+              <span className="block text-lg font-bold tracking-[-0.03em]">
+                coursefinder
+              </span>
+              <span className="hidden text-[11px] font-medium text-brand-gray sm:block">
+                Curated learning, powered by AI
+              </span>
+            </span>
+          </button>
+          <div className="hidden items-center gap-2 text-xs font-medium text-brand-gray md:flex">
+            <span className="h-2 w-2 rounded-full bg-emerald-500" />
+            Discover courses from leading platforms
           </div>
         </div>
       </header>
 
-      <main className="flex-1 max-w-6xl mx-auto w-full p-3 sm:p-4 space-y-4">
+      <main className="mx-auto w-full max-w-7xl flex-1 px-4 py-5 sm:px-6 sm:py-7">
         <TabNav
           activeTab={activeTab}
           onTabChange={setActiveTab}
@@ -126,63 +262,140 @@ export default function Home() {
         />
 
         {activeTab !== "favorites" && (
-          <div className="brutal-border flex items-center gap-4 bg-white shadow-brutal p-4 sm:p-6">
-            <SearchBar
-              value={query}
-              onChange={setQuery}
-              onSubmit={activeTab === "search" ? handleSearch : handleGenerate}
-              isLoading={isSearching || isGenerating}
-              activeTab={activeTab}
-            />
-            {activeTab === "roadmap" && !isGenerating && (
-              <Button
-                size="sm"
-                className="md:w-46 md:h-16 flex items-center"
-                onClick={handleGenerate}
-              >
-                <Sparkles className="w-4 h-4 md:mr-2" />
-                <span className="md:block hidden">Generate Roadmap</span>
-              </Button>
-            )}
-          </div>
+          <section className="relative mt-5 overflow-hidden rounded-[28px] bg-[linear-gradient(120deg,#315b4c_0%,#274c40_58%,#3b5b4e_100%)] px-5 py-8 text-white shadow-[0_20px_60px_rgba(39,76,64,0.2)] sm:px-10 sm:py-9 lg:px-14 lg:py-10">
+            <div className="pointer-events-none absolute -right-20 -top-32 h-72 w-72 rounded-full border-[58px] border-white/[0.06]" />
+            <div className="pointer-events-none absolute -bottom-36 right-32 h-64 w-64 rounded-full bg-[#f4b29f]/15 blur-3xl" />
+            <div className="relative max-w-3xl">
+              <p className="mb-3 flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-[#f4aa98]">
+                <Sparkles className="h-3.5 w-3.5" />
+                {heroCopy.eyebrow}
+              </p>
+              <h1 className="font-display max-w-2xl text-4xl leading-[1.04] tracking-[-0.035em] sm:text-[44px] lg:text-[50px]">
+                {heroCopy.title}
+              </h1>
+              <p className="mt-3 max-w-2xl text-sm leading-6 text-white/65 sm:text-[15px]">
+                {heroCopy.description}
+              </p>
+              <div className="mt-5 rounded-2xl bg-white p-2 shadow-[0_14px_34px_rgba(0,0,0,0.16)] sm:p-2.5">
+                <SearchBar
+                  value={activeTab === "search" ? searchQuery : roadmapQuery}
+                  onChange={activeTab === "search" ? setSearchQuery : setRoadmapQuery}
+                  onSubmit={
+                    activeTab === "search" ? handleSearch : handleGenerate
+                  }
+                  isLoading={activeTab === "search" ? isSearching : isGenerating}
+                  activeTab={activeTab}
+                />
+              </div>
+              <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 text-[11px] text-white/55">
+                <span className="flex items-center gap-1.5">
+                  <Check className="h-3.5 w-3.5 text-[#f4aa98]" /> 100% free
+                  resources
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <Check className="h-3.5 w-3.5 text-[#f4aa98]" /> Personalized
+                  with AI
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <Check className="h-3.5 w-3.5 text-[#f4aa98]" /> Trusted
+                  platforms
+                </span>
+              </div>
+            </div>
+          </section>
         )}
 
         {activeTab === "search" && (
-          <div className="space-y-4">
+          <div className="space-y-7 py-8">
             <PopularTopics onSelect={handleAction} disabled={isSearching} />
             {isSearching ? (
-              <div className="brutal-border bg-white shadow-brutal py-20 flex flex-col items-center justify-center gap-4">
+              <div className="flex min-h-64 flex-col items-center justify-center gap-4 rounded-2xl border border-[#e2e7e1] bg-white">
                 <LoadingSpinner size="lg" />
-                <p className="text-brand-gray font-bold uppercase tracking-widest text-xs">
-                  Searching for courses...
-                </p>
+                <div className="text-center">
+                  <p className="font-semibold">Finding your best matches</p>
+                  <p className="mt-1 text-sm text-brand-gray">
+                    Searching across trusted learning platforms…
+                  </p>
+                </div>
               </div>
             ) : searchError ? (
-              <div className="brutal-border border-red-500 bg-red-50 p-4 text-red-600 font-bold">
+              <div className="rounded-2xl border border-red-200 bg-red-50 p-5 text-sm text-red-700">
                 {searchError}
               </div>
             ) : courses.length > 0 ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                {courses.map((c, i) => (
-                  <CourseCard
-                    key={i}
-                    course={c}
-                    onClick={() => setSelectedCourse(c)}
-                    isFavorite={isFavorite(c.url)}
-                    onToggleFavorite={() => toggleFavorite(c)}
-                  />
-                ))}
+              <section>
+                <div className="mb-5 flex items-end justify-between">
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-[0.14em] text-brand-orange">
+                      Curated for you
+                    </p>
+                    <h2 className="mt-1 text-2xl font-semibold tracking-tight">
+                      Top course matches
+                    </h2>
+                  </div>
+                  <span className="text-sm text-brand-gray">
+                    {courses.length} {courses.length === 1 ? "course" : "courses"}
+                  </span>
+                </div>
+                <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                  {courses.map((course, index) => (
+                    <CourseCard
+                      key={`${course.url}-${index}`}
+                      course={course}
+                      onClick={() => setSelectedCourse(course)}
+                      isFavorite={isFavorite(course.url)}
+                      onToggleFavorite={() => toggleFavorite(course)}
+                    />
+                  ))}
+                </div>
+              </section>
+            ) : hasSearched ? (
+              <div className="rounded-2xl border border-[#e2e7e1] bg-white py-14 text-center">
+                <Search className="mx-auto h-8 w-8 text-brand-gray/45" />
+                <h2 className="mt-4 font-semibold">No matching courses found</h2>
+                <p className="mt-1 text-sm text-brand-gray">
+                  Try a broader topic or choose one of the popular searches above.
+                </p>
               </div>
             ) : (
-              <div className="text-center py-12 text-brand-gray brutal-border bg-white shadow-brutal">
-                No results found. Try a different topic.
-              </div>
+              <section className="grid gap-4 md:grid-cols-3">
+                {[
+                  {
+                    icon: Search,
+                    title: "Search naturally",
+                    text: "Describe the skill you want to build in your own words.",
+                  },
+                  {
+                    icon: BookOpen,
+                    title: "Compare the best",
+                    text: "Explore free courses from respected learning platforms.",
+                  },
+                  {
+                    icon: Heart,
+                    title: "Build your library",
+                    text: "Save promising courses and get related recommendations.",
+                  },
+                ].map((item) => (
+                  <div
+                    key={item.title}
+                    className="rounded-2xl border border-[#e1e6e0] bg-white p-5"
+                  >
+                    <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#fcebe7] text-brand-orange">
+                      <item.icon className="h-5 w-5" />
+                    </span>
+                    <h2 className="mt-5 font-semibold">{item.title}</h2>
+                    <p className="mt-2 text-sm leading-6 text-brand-gray">
+                      {item.text}
+                    </p>
+                  </div>
+                ))}
+              </section>
             )}
           </div>
         )}
 
         {activeTab === "roadmap" && (
-          <div className="space-y-4">
+          <div className="space-y-5 py-8">
             <RoadmapView
               roadmap={roadmap}
               isLoading={isGenerating}
@@ -197,21 +410,26 @@ export default function Home() {
         )}
 
         {activeTab === "favorites" && (
-          <FavoritesSection
-            favorites={favorites}
-            onRemove={removeFavorite}
-            suggestions={{
-              courses: suggestions,
-              isLoading: isSuggestionsLoading,
-              error: suggestionsError,
-              onGetSuggestions: () => getSuggestions(favorites),
-            }}
-          />
+          <div className="py-8">
+            <FavoritesSection
+              favorites={favorites}
+              onRemove={removeFavorite}
+              suggestions={{
+                courses: suggestions,
+                isLoading: isSuggestionsLoading,
+                error: suggestionsError,
+                onGetSuggestions: () => getSuggestions(favorites),
+              }}
+            />
+          </div>
         )}
       </main>
 
-      <footer className="border-t-2 border-brand-black bg-white py-6 mt-8 text-center text-sm text-brand-gray">
-        <p>Find free courses from Coursera, edX, MIT, YouTube, and more.</p>
+      <footer className="border-t border-[#e3e8e2] bg-white">
+        <div className="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-7 text-sm text-brand-gray sm:flex-row sm:items-center sm:justify-between sm:px-6">
+          <p>Learn more. Spend less. Grow continuously.</p>
+          <p className="text-xs">Coursera · edX · MIT OCW · YouTube · and more</p>
+        </div>
       </footer>
 
       <ChatTrigger onClick={() => setIsChatOpen(true)} />
@@ -224,6 +442,7 @@ export default function Home() {
           setIsChatHistoryOpen(true);
           setIsChatOpen(false);
         }}
+        onNewChat={handleNewChat}
         isLoading={isChatLoading}
       />
       <ChatHistory
@@ -247,42 +466,53 @@ export default function Home() {
           onClose={() => setSelectedCourse(null)}
           title={selectedCourse.title}
         >
-          <div className="space-y-4">
+          <div className="space-y-5">
             {["Provider", "Description", "Rating", "Duration", "Level"].map(
               (label) => {
-                const val = selectedCourse[label.toLowerCase() as keyof Course];
+                const value =
+                  selectedCourse[label.toLowerCase() as keyof Course];
                 return (
-                  val && (
+                  value && (
                     <div key={label}>
-                      <p className="font-bold text-brand-gray uppercase text-[10px] tracking-widest mb-1">
+                      <p className="mb-1.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-brand-gray">
                         {label}
                       </p>
                       <p
                         className={
-                          label === "Provider" ? "text-lg font-bold" : ""
+                          label === "Provider"
+                            ? "text-lg font-semibold"
+                            : "text-sm leading-6 text-[#465149]"
                         }
                       >
-                        {String(val)}
+                        {String(value)}
                       </p>
                     </div>
                   )
                 );
               },
             )}
-            <div className="flex gap-2 mt-6">
-              <button
+            <div className="flex flex-col gap-2 border-t border-[#e5e9e4] pt-5 sm:flex-row">
+              <Button
                 onClick={() => toggleFavorite(selectedCourse)}
-                className="flex-1 brutal-border py-2 font-bold text-sm hover:bg-brand-paper"
+                variant="secondary"
+                className="flex-1"
               >
-                {isFavorite(selectedCourse.url) ? "Remove" : "Add"} to Favorites
-              </button>
+                <Heart
+                  className={`mr-2 h-4 w-4 ${
+                    isFavorite(selectedCourse.url)
+                      ? "fill-current text-red-500"
+                      : ""
+                  }`}
+                />
+                {isFavorite(selectedCourse.url) ? "Remove saved" : "Save course"}
+              </Button>
               <a
                 href={selectedCourse.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex-1 text-center brutal-btn"
+                className="brutal-btn flex-1 gap-2 text-sm"
               >
-                Visit Course
+                Visit course <ArrowUpRight className="h-4 w-4" />
               </a>
             </div>
           </div>

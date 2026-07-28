@@ -22,8 +22,8 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: 'Free Course Finder | AI-Powered Learning',
-  description: 'Find the best free online courses with AI-powered search. Discover learning paths and roadmaps for any topic.',
+  title: 'Coursefinder — Learn without limits',
+  description: 'Discover high-quality free courses and build a personalized learning path with AI.',
 };
 
 export default function RootLayout({
@@ -34,7 +34,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable} ${playfair.variable}`}>
       <head>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23FF6321'/><text y='.9em' font-size='90' x='10'>📚</text></svg>" />
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect rx='26' width='100' height='100' fill='%23E85D3F'/><text y='.82em' font-size='72' x='14' fill='white'>C</text></svg>" />
       </head>
       <body className="min-h-screen antialiased">
         <AISettingsProvider>{children}</AISettingsProvider>
