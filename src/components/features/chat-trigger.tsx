@@ -13,12 +13,11 @@ export function ChatTrigger({ onClick }: ChatTriggerProps) {
       onClick={onClick}
       className={cn(
         'fixed bottom-6 right-6 z-40',
-        'w-14 h-14 md:w-16 md:h-16',
-        'brutal-border bg-brand-orange text-white',
-        'shadow-brutal-xl hover:shadow-none',
+        'h-13 w-13 rounded-full md:h-14 md:w-14',
+        'bg-brand-orange text-white',
+        'shadow-[0_14px_34px_rgba(232,93,63,0.32)] hover:bg-[#d94e32] hover:-translate-y-1',
         'flex items-center justify-center',
-        'transition-all duration-150 hover:-translate-x-0.5 hover:-translate-y-0.5',
-        'active:translate-x-0 active:translate-y-0'
+        'transition-all duration-200'
       )}
       title="Chat with AI"
     >
