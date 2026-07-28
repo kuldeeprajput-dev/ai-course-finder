@@ -1,5 +1,3 @@
-
-
 # Free Course Finder
 
 [![Live Demo](https://ai-course-finder-ivory.vercel.app/)](https://ai-course-finder-ivory.vercel.app/)
@@ -59,12 +57,12 @@ Open [http://localhost:3000](http://localhost:3000) to view the app.
 
 ## Available Scripts
 
-| Command | Description |
-|---------|-------------|
-| `npm run dev` | Start development server |
-| `npm run build` | Build for production |
-| `npm run start` | Start production server |
-| `npm run lint` | Run ESLint |
+| Command             | Description                  |
+| ------------------- | ---------------------------- |
+| `npm run dev`       | Start development server     |
+| `npm run build`     | Build for production         |
+| `npm run start`     | Start production server      |
+| `npm run lint`      | Run ESLint                   |
 | `npm run typecheck` | Run TypeScript type checking |
 
 ## Project Structure
@@ -95,5 +93,3 @@ Deploy to Vercel:
 4. Deploy
 
 ---
-
-

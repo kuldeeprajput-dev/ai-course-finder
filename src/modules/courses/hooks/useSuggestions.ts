@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { useState, useCallback } from 'react';
-import { FavoriteCourse, Course } from '@/types';
+import { useState, useCallback } from "react";
+import { FavoriteCourse, Course } from "@/shared/types";
 
 interface SuggestionResult {
   success: boolean;
@@ -9,6 +9,9 @@ interface SuggestionResult {
   error?: string;
 }
 
+/**
+ * Custom hook to fetch course recommendations based on user favorites.
+ */
 export function useSuggestions() {
   const [suggestions, setSuggestions] = useState<Course[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -24,9 +27,9 @@ export function useSuggestions() {
     setError(null);
 
     try {
-      const response = await fetch('/api/suggestions', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch("/api/suggestions", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ favorites }),
       });
 
@@ -35,11 +38,11 @@ export function useSuggestions() {
       if (data.success && data.courses) {
         setSuggestions(data.courses);
       } else {
-        setError(data.error || 'Failed to get suggestions');
+        setError(data.error || "Failed to get suggestions");
       }
     } catch (err) {
-      console.error('Suggestions error:', err);
-      setError('Failed to get suggestions. Please try again.');
+      console.error("Suggestions error:", err);
+      setError("Failed to get suggestions. Please try again.");
     } finally {
       setIsLoading(false);
     }
