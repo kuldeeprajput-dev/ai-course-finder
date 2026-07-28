@@ -51,7 +51,7 @@ export async function POST(req: Request) {
       .slice(0, 6);
 
     return Response.json({ success: true, courses });
-  } catch (error) {
+  } catch {
     return Response.json({ success: false, error: 'Failed to get suggestions' });
   }
 }

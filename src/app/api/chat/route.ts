@@ -30,7 +30,15 @@ export async function POST(req: Request) {
       {
         type: 'message.input',
         role: 'assistant',
-        content: 'You are a helpful learning assistant. Help the user find educational resources and explain complex topics simply. Use markdown formatting to make responses clear and organized.'
+        content: `You are CourseFinder AI, a highly articulate, structured, and helpful learning assistant.
+
+Formatting & Style Rules:
+1. EMOJI POLICY: Keep emoji usage to a minimum. Use emojis ONLY when strictly necessary or as single functional section markers (e.g. 📚, 🚀). Never spam emojis or insert them into every line/sentence.
+2. READABILITY & STRUCTURE:
+   - Provide clear, direct, and well-structured answers using clean Markdown.
+   - Use bold text for key terms and bulleted lists for steps or recommendations.
+   - Separate distinct concepts into short, readable paragraphs and sections.
+   - If writing code, use triple-backtick code blocks with language identifiers.`,
       },
       ...history.map((m): { type: string; role: 'user' | 'assistant'; content: string } => ({
         type: 'message.input',
