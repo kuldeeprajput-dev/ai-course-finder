@@ -22,14 +22,9 @@
 
 ## Application Video Walkthrough
 
-<div align="center">
-  <video src="https://res.cloudinary.com/hankiyahua23r23/video/upload/v1785299276/freecourse_b6yoat.mp4" controls width="100%" poster="https://res.cloudinary.com/hankiyahua23r23/video/upload/so_0,w_1280,q_auto,f_jpg/v1785299276/freecourse_b6yoat.jpg">
-    <a href="https://res.cloudinary.com/hankiyahua23r23/video/upload/v1785299276/freecourse_b6yoat.mp4">
-      Watch Coursenva Full Application Demonstration Video
-    </a>
-  </video>
+https://github.com/user-attachments/assets/5f1f50dc-e925-45cb-979c-0c8c311bb433
 
-  <p>
+  <p align="center">
     <em>Demonstration of natural language course discovery, AI roadmap generation, multi-page PDF export, and streaming assistant interaction.</em>
   </p>
 </div>
