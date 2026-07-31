@@ -2,14 +2,14 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Coursenva",
+    name: "Coursenva — Learn without limits",
     short_name: "Coursenva",
     description:
-      "Discover high-quality free courses and build personalized learning paths.",
+      "Discover high-quality free online courses and build personalized learning paths with AI.",
     start_url: "/",
     display: "standalone",
-    background_color: "#f7f8f5",
-    theme_color: "#315b4c",
+    background_color: "#f2f6f4",
+    theme_color: "#e85d3f",
     icons: [
       {
         src: "/icon.svg",
