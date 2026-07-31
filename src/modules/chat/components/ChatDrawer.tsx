@@ -36,22 +36,26 @@ function MessageContent({
   isUser: boolean;
 }) {
   if (isUser) {
-    return <p className="text-sm whitespace-pre-wrap break-words">{content}</p>;
+    return (
+      <p className="text-[11px] leading-relaxed whitespace-pre-wrap break-words sm:text-sm">
+        {content}
+      </p>
+    );
   }
 
   return (
     <div
-      className="text-sm leading-relaxed text-[#2c352e] space-y-2
-      [&_h1]:text-base [&_h1]:font-bold [&_h1]:text-brand-black [&_h1]:mt-3 [&_h1]:mb-1
-      [&_h2]:text-sm [&_h2]:font-bold [&_h2]:text-brand-black [&_h2]:mt-3 [&_h2]:mb-1
-      [&_h3]:text-sm [&_h3]:font-semibold [&_h3]:text-brand-black [&_h3]:mt-2 [&_h3]:mb-1
-      [&_p]:my-1.5 [&_p]:leading-relaxed
-      [&_ul]:my-2 [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:my-2 [&_ol]:list-decimal [&_ol]:pl-5
-      [&_li]:my-1 [&_li]:leading-normal
-      [&_code]:text-xs [&_code]:bg-[#eaede8] [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:rounded-md [&_code]:font-mono [&_code]:text-brand-orange
-      [&_pre]:bg-[#1e2822] [&_pre]:text-white [&_pre]:p-3 [&_pre]:rounded-xl [&_pre]:overflow-x-auto [&_pre]:my-2 [&_pre]:text-xs
+      className="text-[11px] leading-relaxed text-[#2c352e] space-y-1.5 sm:text-sm sm:space-y-2
+      [&_h1]:text-xs [&_h1]:font-bold [&_h1]:text-brand-black [&_h1]:mt-2 [&_h1]:mb-1 sm:[&_h1]:text-base sm:[&_h1]:mt-3
+      [&_h2]:text-xs [&_h2]:font-bold [&_h2]:text-brand-black [&_h2]:mt-2 [&_h2]:mb-1 sm:[&_h2]:text-sm sm:[&_h2]:mt-3
+      [&_h3]:text-[11px] [&_h3]:font-semibold [&_h3]:text-brand-black [&_h3]:mt-1.5 [&_h3]:mb-0.5 sm:[&_h3]:text-sm sm:[&_h3]:mt-2
+      [&_p]:my-1 [&_p]:leading-relaxed sm:[&_p]:my-1.5
+      [&_ul]:my-1.5 [&_ul]:list-disc [&_ul]:pl-4 sm:[&_ul]:my-2 sm:[&_ul]:pl-5 [&_ol]:my-1.5 [&_ol]:list-decimal [&_ol]:pl-4 sm:[&_ol]:my-2 sm:[&_ol]:pl-5
+      [&_li]:my-0.5 [&_li]:leading-relaxed sm:[&_li]:my-1
+      [&_code]:text-[10px] [&_code]:bg-[#eaede8] [&_code]:px-1 [&_code]:py-0.5 [&_code]:rounded [&_code]:font-mono [&_code]:text-brand-orange sm:[&_code]:text-xs sm:[&_code]:px-1.5 sm:[&_code]:rounded-md
+      [&_pre]:bg-[#1e2822] [&_pre]:text-white [&_pre]:p-2.5 [&_pre]:rounded-lg [&_pre]:overflow-x-auto [&_pre]:my-1.5 [&_pre]:text-[10px] sm:[&_pre]:p-3 sm:[&_pre]:rounded-xl sm:[&_pre]:my-2 sm:[&_pre]:text-xs
       [&_strong]:font-semibold [&_strong]:text-brand-black [&_a]:text-brand-orange [&_a]:underline [&_a]:font-medium
-      [&_blockquote]:border-l-2 [&_blockquote]:border-brand-orange [&_blockquote]:pl-3 [&_blockquote]:italic [&_blockquote]:text-brand-gray"
+      [&_blockquote]:border-l-2 [&_blockquote]:border-brand-orange [&_blockquote]:pl-2.5 [&_blockquote]:italic [&_blockquote]:text-brand-gray sm:[&_blockquote]:pl-3"
     >
       <ReactMarkdown>{content}</ReactMarkdown>
     </div>
@@ -186,13 +190,13 @@ export function ChatDrawer({
           </div>
         )}
 
-        <div className="flex shrink-0 items-center justify-between border-b border-[#e5e9e4] px-4 py-3.5 pl-5 max-sm:px-3 max-sm:py-3 max-sm:pl-3">
-          <div className="flex items-center gap-3 max-sm:min-w-0 max-sm:gap-2">
-            <span className="flex h-10 w-10 items-center max-sm:h-9 max-sm:w-9 justify-center rounded-xl bg-[#fcebe7] text-brand-orange">
-              <Bot className="h-5 w-5" />
+        <div className="flex shrink-0 items-center justify-between border-b border-[#e5e9e4] p-3 sm:px-4 sm:py-3.5 sm:pl-5">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <span className="flex h-7.5 w-7.5 items-center justify-center rounded-lg bg-[#fcebe7] text-brand-orange sm:h-10 sm:w-10 sm:rounded-xl">
+              <Bot className="h-4 w-4 sm:h-5 sm:w-5" />
             </span>
             <div>
-              <h2 className="font-semibold text-brand-black max-sm:text-sm">
+              <h2 className="text-xs font-semibold text-brand-black sm:text-base">
                 Learning assistant
               </h2>
               <p className="text-xs text-brand-gray max-sm:hidden">
@@ -200,16 +204,16 @@ export function ChatDrawer({
               </p>
             </div>
           </div>
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-0.5 sm:gap-1">
             {onNewChat && (
               <button
                 type="button"
                 onClick={onNewChat}
-                className="rounded-lg p-2 text-brand-gray transition-colors hover:bg-brand-paper hover:text-brand-black"
+                className="rounded-lg p-1.5 text-brand-gray transition-colors hover:bg-brand-paper hover:text-brand-black sm:p-2"
                 title="New Chat"
                 aria-label="New Chat"
               >
-                <SquarePlus className="w-4.5 h-4.5" />
+                <SquarePlus className="h-3.5 w-3.5 sm:h-4.5 sm:w-4.5" />
               </button>
             )}
             <button
@@ -220,41 +224,41 @@ export function ChatDrawer({
               aria-label={isMaximized ? "Restore view" : "Maximize full screen"}
             >
               {isMaximized ? (
-                <Minimize2 className="w-4.5 h-4.5" />
+                <Minimize2 className="h-4.5 w-4.5" />
               ) : (
-                <Maximize2 className="w-4.5 h-4.5" />
+                <Maximize2 className="h-4.5 w-4.5" />
               )}
             </button>
             <button
               type="button"
               onClick={onOpenHistory}
-              className="rounded-lg p-2 text-brand-gray transition-colors hover:bg-brand-paper hover:text-brand-black"
+              className="rounded-lg p-1.5 text-brand-gray transition-colors hover:bg-brand-paper hover:text-brand-black sm:p-2"
               title="Chat History"
               aria-label="Chat History"
             >
-              <History className="w-4.5 h-4.5" />
+              <History className="h-3.5 w-3.5 sm:h-4.5 sm:w-4.5" />
             </button>
             <button
               type="button"
               onClick={onClose}
-              className="rounded-lg p-2 text-brand-gray transition-colors hover:bg-brand-paper hover:text-brand-black"
+              className="rounded-lg p-1.5 text-brand-gray transition-colors hover:bg-brand-paper hover:text-brand-black sm:p-2"
               aria-label="Close chat"
             >
-              <X className="w-4.5 h-4.5" />
+              <X className="h-3.5 w-3.5 sm:h-4.5 sm:w-4.5" />
             </button>
           </div>
         </div>
 
-        <div className="flex-1 overflow-y-auto p-4 space-y-4 min-h-0 pl-6 flex flex-col max-sm:p-3">
+        <div className="flex-1 overflow-y-auto p-3 space-y-3 min-h-0 sm:p-4 sm:pl-6 sm:space-y-4 flex flex-col">
           {messages.length === 0 && (
-            <div className="flex flex-1 flex-col items-center justify-center py-12 text-center text-brand-gray my-auto">
-              <span className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-paper">
-                <Sparkles className="h-5 w-5 text-brand-orange" />
+            <div className="flex flex-1 flex-col items-center justify-center py-8 text-center text-brand-gray my-auto sm:py-12">
+              <span className="mx-auto flex h-9 w-9 items-center justify-center rounded-xl bg-brand-paper sm:h-12 sm:w-12 sm:rounded-2xl">
+                <Sparkles className="h-4 w-4 text-brand-orange sm:h-5 sm:w-5" />
               </span>
-              <p className="mt-4 text-sm font-medium text-brand-black">
+              <p className="mt-3 text-xs font-semibold text-brand-black sm:mt-4 sm:text-sm">
                 How can I help you learn?
               </p>
-              <p className="mx-auto mt-1 max-w-xs text-xs leading-5">
+              <p className="mx-auto mt-1 max-w-xs text-[11px] leading-relaxed sm:text-xs sm:leading-5">
                 Ask for course comparisons, study advice, or help choosing your
                 next skill.
               </p>
@@ -266,27 +270,27 @@ export function ChatDrawer({
               <div
                 key={msg.id}
                 className={cn(
-                  "flex gap-3 max-sm:gap-2",
+                  "flex gap-2 sm:gap-3",
                   msg.role === "user" ? "flex-row-reverse" : "flex-row",
                 )}
               >
                 <div
                   className={cn(
-                    "w-8 h-8 rounded-full flex items-center justify-center shrink-0",
+                    "h-6.5 w-6.5 rounded-full flex items-center justify-center shrink-0 sm:h-8 sm:w-8",
                     msg.role === "user"
                       ? "bg-brand-orange text-white"
                       : "bg-brand-paper",
                   )}
                 >
                   {msg.role === "user" ? (
-                    <User className="w-4 h-4" />
+                    <User className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                   ) : (
-                    <Bot className="w-4 h-4" />
+                    <Bot className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                   )}
                 </div>
                 <div
                   className={cn(
-                    "max-w-[85%] overflow-hidden rounded-2xl px-3.5 py-3 md:max-w-[80%]",
+                    "max-w-[85%] overflow-hidden rounded-2xl px-3 py-2 text-xs md:max-w-[80%] sm:px-3.5 sm:py-3 sm:text-sm",
                     msg.role === "user"
                       ? "rounded-tr-sm bg-brand-orange text-white"
                       : "rounded-tl-sm bg-brand-paper",
@@ -305,15 +309,15 @@ export function ChatDrawer({
               messages[messages.length - 1].role === "user" ||
               (messages[messages.length - 1].role === "assistant" &&
                 !messages[messages.length - 1].content)) && (
-              <div className="flex gap-3">
-                <div className="w-8 h-8 rounded-full bg-brand-paper flex items-center justify-center shrink-0">
-                  <Bot className="w-4 h-4" />
+              <div className="flex gap-2 sm:gap-3">
+                <div className="h-6.5 w-6.5 rounded-full bg-brand-paper flex items-center justify-center shrink-0 sm:h-8 sm:w-8">
+                  <Bot className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                 </div>
-                <div className="rounded-2xl rounded-tl-sm bg-brand-paper p-3">
+                <div className="rounded-2xl rounded-tl-sm bg-brand-paper p-2.5 sm:p-3">
                   <div className="flex gap-1">
-                    <span className="w-2 h-2 bg-brand-gray rounded-full animate-bounce [animation-delay:0ms]" />
-                    <span className="w-2 h-2 bg-brand-gray rounded-full animate-bounce [animation-delay:150ms]" />
-                    <span className="w-2 h-2 bg-brand-gray rounded-full animate-bounce [animation-delay:300ms]" />
+                    <span className="w-1.5 h-1.5 bg-brand-gray rounded-full animate-bounce [animation-delay:0ms] sm:w-2 sm:h-2" />
+                    <span className="w-1.5 h-1.5 bg-brand-gray rounded-full animate-bounce [animation-delay:150ms] sm:w-2 sm:h-2" />
+                    <span className="w-1.5 h-1.5 bg-brand-gray rounded-full animate-bounce [animation-delay:300ms] sm:w-2 sm:h-2" />
                   </div>
                 </div>
               </div>
@@ -323,7 +327,7 @@ export function ChatDrawer({
 
         <form
           onSubmit={handleSubmit}
-          className="shrink-0 border-t border-[#e5e9e4] p-4 pl-6 max-sm:p-3 max-sm:pb-[max(0.75rem,env(safe-area-inset-bottom))]"
+          className="shrink-0 border-t border-[#e5e9e4] p-3 max-sm:pb-[max(0.75rem,env(safe-area-inset-bottom))] sm:p-4 sm:pl-6"
         >
           <div className="flex gap-2">
             <Input
@@ -332,15 +336,15 @@ export function ChatDrawer({
               onChange={(e) => setInput(e.target.value)}
               placeholder="Ask about courses..."
               disabled={isLoading}
-              className="min-w-0 flex-1"
+              className="h-8.5 px-3 text-xs placeholder:text-xs min-w-0 flex-1 sm:h-12 sm:px-4 sm:text-sm"
             />
             <Button
               type="submit"
               disabled={isLoading || !input.trim()}
-              className="h-12 w-12 shrink-0 p-0"
+              className="h-8.5 w-8.5 shrink-0 p-0 rounded-xl sm:h-12 sm:w-12"
               aria-label="Send message"
             >
-              <Send className="w-4 h-4" />
+              <Send className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
             </Button>
           </div>
         </form>
