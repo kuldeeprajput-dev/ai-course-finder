@@ -40,7 +40,7 @@ export function SearchBar({
               ? "What skill do you want to master?"
               : placeholder
           }
-          className="h-9 w-full border-0 bg-transparent pl-8 text-xs focus:outline-none focus:border-transparent focus:ring-0 focus-visible:outline-none focus-visible:ring-0 focus-visible:border-transparent focus:shadow-none sm:h-12 sm:pl-12 sm:text-base"
+          className="h-8 w-full border-0 bg-transparent pl-7 text-[11px] placeholder:text-[11px] focus:outline-none focus:border-transparent focus:ring-0 focus-visible:outline-none focus-visible:ring-0 focus-visible:border-transparent focus:shadow-none sm:h-12 sm:pl-12 sm:text-base sm:placeholder:text-sm"
           style={{ outline: "none", boxShadow: "none" }}
           disabled={isLoading}
         />
@@ -48,7 +48,7 @@ export function SearchBar({
       <Button
         type="submit"
         disabled={isLoading || !value.trim()}
-        className="h-9 shrink-0 px-3 text-xs sm:h-12 sm:min-w-[150px] sm:px-4 sm:text-sm"
+        className="h-8 shrink-0 px-2.5 text-[11px] sm:h-12 sm:min-w-[160px] sm:gap-2.5 sm:px-5 sm:text-sm"
       >
         {isLoading ? (
           <>
@@ -57,13 +57,13 @@ export function SearchBar({
           </>
         ) : activeTab === "roadmap" ? (
           <>
-            <Sparkles className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+            <Sparkles className="h-3.5 w-3.5 sm:h-4 sm:w-4 shrink-0" />
             <span className="hidden sm:inline">Build my roadmap</span>
           </>
         ) : (
           <>
+            <Search className="h-3.5 w-3.5 sm:h-4 sm:w-4 shrink-0" />
             <span className="hidden sm:inline">Search courses</span>
-            <Search className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
           </>
         )}
       </Button>
