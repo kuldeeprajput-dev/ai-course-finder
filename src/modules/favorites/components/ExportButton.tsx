@@ -418,16 +418,19 @@ export function ExportButton({ roadmap }: ExportButtonProps) {
       onClick={handleExport}
       disabled={isExporting}
       variant="secondary"
-      className={cn("gap-2", isExporting && "opacity-70")}
+      className={cn(
+        "h-8.5 gap-1.5 px-3 py-1.5 text-xs sm:h-10 sm:gap-2 sm:px-4 sm:py-2 sm:text-sm",
+        isExporting && "opacity-70",
+      )}
     >
       {isExporting ? (
         <>
-          <Loader2 className="w-4 h-4 animate-spin" />
+          <Loader2 className="h-3.5 w-3.5 animate-spin sm:h-4 sm:w-4" />
           Exporting...
         </>
       ) : (
         <>
-          <Download className="w-4 h-4" />
+          <Download className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
           Export PDF
         </>
       )}

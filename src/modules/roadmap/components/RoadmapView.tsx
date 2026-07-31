@@ -35,23 +35,23 @@ function ResourceIcon({ type }: { type: string }) {
 
 function StepItem({ step }: { step: RoadmapStep }) {
   return (
-    <div className="relative pb-7 pl-11 last:pb-0 max-sm:pl-9">
-      <div className="absolute left-0 top-0 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-brand-orange text-sm font-semibold text-white shadow-[0_4px_12px_rgba(232,93,63,0.25)]">
+    <div className="relative pb-4 pl-7 sm:pb-7 sm:pl-11 last:pb-0">
+      <div className="absolute left-0 top-0 z-10 flex h-6 w-6 items-center justify-center rounded-full bg-brand-orange text-[10px] font-semibold text-white shadow-[0_4px_12px_rgba(232,93,63,0.25)] sm:h-8 sm:w-8 sm:text-sm">
         {step.step}
       </div>
-      <div className="absolute bottom-0 left-[15px] top-8 w-px bg-[#d9dfd9]" />
-      <div className="rounded-2xl border border-[#dfe5de] bg-white p-5 shadow-[0_8px_25px_rgba(23,33,27,0.045)] sm:p-6 max-sm:p-4">
-        <h4 className="mb-2 text-lg font-semibold tracking-tight">
+      <div className="absolute bottom-0 left-[11px] top-6 w-px bg-[#d9dfd9] sm:left-[15px] sm:top-8" />
+      <div className="rounded-xl border border-[#dfe5de] bg-white p-3 shadow-[0_8px_25px_rgba(23,33,27,0.045)] sm:rounded-2xl sm:p-6">
+        <h4 className="mb-1 text-xs font-semibold tracking-tight sm:mb-2 sm:text-lg">
           {step.title}
         </h4>
-        <p className="mb-5 text-sm leading-6 text-brand-gray">
+        <p className="mb-3 text-[11px] leading-relaxed text-brand-gray sm:mb-5 sm:text-sm sm:leading-6">
           {step.description}
         </p>
-        <div className="space-y-2">
-          <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-brand-gray">
+        <div className="space-y-1 sm:space-y-2">
+          <p className="text-[9px] font-bold uppercase tracking-[0.14em] text-brand-gray sm:text-[10px]">
             Recommended resources
           </p>
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-1.5 sm:gap-2">
             {step.resources.map((resource, idx) => (
               <a
                 key={idx}
@@ -59,7 +59,7 @@ function StepItem({ step }: { step: RoadmapStep }) {
                 target="_blank"
                 rel="noopener noreferrer"
                 className={cn(
-                  "flex items-center gap-2 rounded-lg border border-[#dfe4de] bg-brand-paper px-3 py-2 text-xs font-medium max-sm:w-full",
+                  "flex items-center gap-1 rounded-lg border border-[#dfe4de] bg-brand-paper px-2 py-1 text-[10px] font-medium max-sm:w-full sm:gap-2 sm:px-3 sm:py-2 sm:text-xs",
                   "hover:border-brand-[#fff5f2] hover:text-brand-orange transition-colors",
                 )}
               >
@@ -67,7 +67,7 @@ function StepItem({ step }: { step: RoadmapStep }) {
                 <span className="truncate max-w-[150px] max-sm:min-w-0 max-sm:flex-1 max-sm:max-w-none">
                   {resource.title}
                 </span>
-                <ExternalLink className="w-3 h-3 shrink-0" />
+                <ExternalLink className="h-3 w-3 shrink-0" />
               </a>
             ))}
           </div>
@@ -83,11 +83,13 @@ function StepItem({ step }: { step: RoadmapStep }) {
 export function RoadmapView({ roadmap, isLoading, error }: RoadmapViewProps) {
   if (isLoading) {
     return (
-      <div className="flex min-h-72 flex-col items-center justify-center gap-4 rounded-2xl border border-[#e0e5df] bg-white py-12">
+      <div className="flex min-h-64 flex-col items-center justify-center gap-3 rounded-2xl border border-[#e0e0df] bg-white py-8 sm:min-h-72 sm:gap-4 sm:py-12">
         <LoadingSpinner size="lg" />
         <div className="text-center">
-          <p className="font-semibold">Designing your learning path</p>
-          <p className="mt-1 text-sm text-brand-gray">
+          <p className="text-xs font-semibold sm:text-base">
+            Designing your learning path
+          </p>
+          <p className="mt-1 text-[11px] text-brand-gray sm:text-sm">
             This usually takes just a few moments…
           </p>
         </div>
@@ -97,22 +99,22 @@ export function RoadmapView({ roadmap, isLoading, error }: RoadmapViewProps) {
 
   if (error) {
     return (
-      <Card className="border-red-200 bg-red-50">
-        <p className="text-red-600">{error}</p>
+      <Card className="border-red-200 bg-red-50 p-3 sm:p-5">
+        <p className="text-xs text-red-600 sm:text-sm">{error}</p>
       </Card>
     );
   }
 
   if (!roadmap) {
     return (
-      <div className="rounded-2xl border border-[#dfe5de] bg-white px-5 py-14 text-center">
-        <span className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-[#fcebe7] text-brand-orange">
-          <Route className="h-6 w-6" />
+      <div className="rounded-2xl border border-[#dfe5de] bg-white p-4 text-center sm:px-5 sm:py-14">
+        <span className="mx-auto flex h-9 w-9 items-center justify-center rounded-xl bg-[#fcebe7] text-brand-orange sm:h-12 sm:w-12 sm:rounded-2xl">
+          <Route className="h-4 w-4 sm:h-6 sm:w-6" />
         </span>
-        <h2 className="mt-5 text-lg font-semibold">
+        <h2 className="mt-3 text-xs font-semibold sm:mt-5 sm:text-lg">
           Your roadmap will appear here
         </h2>
-        <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-brand-gray">
+        <p className="mx-auto mt-1 max-w-md text-[11px] leading-relaxed text-brand-gray sm:mt-2 sm:text-sm sm:leading-6">
           Enter a topic above and we’ll create a structured path with practical
           resources for every step.
         </p>
@@ -121,24 +123,24 @@ export function RoadmapView({ roadmap, isLoading, error }: RoadmapViewProps) {
   }
 
   return (
-    <div className="space-y-6">
-      <div className="relative overflow-hidden rounded-2xl border border-[#d6e2db] bg-gradient-to-r from-[#f2f6f4] via-[#fafcfb] to-white px-7 py-9 sm:px-10 sm:py-11 min-h-[190px] flex items-center shadow-sm max-sm:min-h-0 max-sm:px-5 max-sm:py-7">
-        <div className="w-full flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+    <div className="space-y-4 sm:space-y-6">
+      <div className="relative overflow-hidden rounded-xl border border-[#d6e2db] bg-gradient-to-r from-[#f2f6f4] via-[#fafcfb] to-white p-3.5 shadow-sm sm:rounded-2xl sm:px-10 sm:py-11 sm:min-h-[190px] flex items-center">
+        <div className="w-full flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
           <div className="flex-1">
-            <div className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.14em] text-brand-orange mb-1.5">
-              <Sparkles className="h-3.5 w-3.5" />
+            <div className="flex items-center gap-1.5 text-[9px] font-bold uppercase tracking-[0.14em] text-brand-orange mb-1 sm:text-[11px] sm:mb-1.5">
+              <Sparkles className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
               Your learning roadmap
             </div>
-            <h2 className="font-display text-2xl font-bold tracking-tight text-brand-black sm:text-3xl">
+            <h2 className="font-display text-base font-bold tracking-tight text-brand-black sm:text-3xl">
               {roadmap.title}
             </h2>
-            <p className="mt-1.5 max-w-2xl text-xs sm:text-sm text-brand-gray leading-relaxed">
+            <p className="mt-1 max-w-2xl text-[11px] text-brand-gray leading-relaxed sm:text-sm">
               {roadmap.description}
             </p>
           </div>
           <div className="shrink-0 self-start sm:self-center">
-            <span className="inline-flex items-center gap-1.5 rounded-xl border border-brand-orange/20 bg-[#fcebe7] px-3.5 py-2 text-xs font-semibold text-brand-orange shadow-2xs">
-              <Clock3 className="h-3.5 w-3.5 text-brand-orange" />
+            <span className="inline-flex items-center gap-1 rounded-lg border border-brand-orange/20 bg-[#fcebe7] px-2 py-0.5 text-[9px] font-semibold text-brand-orange shadow-2xs sm:rounded-xl sm:px-3.5 sm:py-2 sm:text-xs">
+              <Clock3 className="h-3 w-3 text-brand-orange sm:h-3.5 sm:w-3.5" />
               {roadmap.totalDuration}
             </span>
           </div>
