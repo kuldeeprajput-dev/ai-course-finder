@@ -55,13 +55,13 @@ export function Modal({
         )}
       >
         {title && (
-          <div className="flex items-center justify-between border-b border-[#e5e9e4] p-3.5 sm:px-5 sm:py-4">
-            <h2 className="text-xs font-semibold tracking-tight max-sm:min-w-0 max-sm:flex-1 max-sm:line-clamp-2 sm:text-lg">
+          <div className="flex items-center justify-between border-b border-[#e5e9e4] px-3.5 py-3 sm:px-5 sm:py-4">
+            <h2 className="text-[13px] font-bold tracking-tight text-brand-black max-sm:min-w-0 max-sm:flex-1 max-sm:line-clamp-1 sm:text-lg">
               {title}
             </h2>
             <button
               onClick={onClose}
-              className="rounded-lg p-1.5 text-brand-gray transition-colors hover:bg-brand-paper hover:text-brand-black max-sm:shrink-0 sm:p-2"
+              className="rounded-lg p-1.5 text-brand-gray transition-colors hover:bg-brand-paper hover:text-brand-black max-sm:shrink-0 sm:p-2 cursor-pointer"
             >
               <X className="h-4 w-4 sm:h-5 sm:w-5" />
             </button>

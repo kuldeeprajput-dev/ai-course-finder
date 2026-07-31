@@ -6,6 +6,7 @@ import { Input } from "@/shared/components/ui/Input";
 import { Button } from "@/shared/components/ui/Button";
 import { AISettings } from "@/shared/types";
 import { Key, Globe, Sparkles } from "lucide-react";
+import { cn } from "@/shared/lib/utils";
 
 export interface SettingsModalProps {
   isOpen: boolean;
@@ -37,11 +38,13 @@ export function SettingsModal({
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="Settings">
-      <form onSubmit={handleSubmit} className="space-y-7">
-        <div className="space-y-4">
-          <div className="flex items-center gap-2 mb-2">
-            <Sparkles className="w-5 h-5 text-brand-orange" />
-            <h3 className="font-semibold">AI provider</h3>
+      <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
+        <div className="space-y-2.5 sm:space-y-3.5">
+          <div className="flex items-center gap-2">
+            <Sparkles className="h-4 w-4 text-brand-orange sm:h-5 sm:w-5" />
+            <h3 className="text-xs font-bold text-brand-black sm:text-sm">
+              AI provider
+            </h3>
           </div>
           <div className="flex gap-2">
             <button
@@ -49,11 +52,12 @@ export function SettingsModal({
               onClick={() =>
                 setFormData({ ...formData, primaryProvider: "gemini" })
               }
-              className={`flex-1 rounded-xl border p-3 text-center text-sm font-semibold transition-all ${
+              className={cn(
+                "flex-1 rounded-xl border py-2 text-center text-xs font-semibold transition-all sm:py-2.5 sm:text-sm cursor-pointer",
                 formData.primaryProvider === "gemini"
                   ? "border-brand-orange bg-[#fff2ee] text-brand-orange"
-                  : "border-[#dfe4de] bg-white hover:bg-brand-paper"
-              }`}
+                  : "border-[#dfe4de] bg-white text-brand-gray hover:bg-brand-paper",
+              )}
             >
               Gemini
             </button>
@@ -62,25 +66,28 @@ export function SettingsModal({
               onClick={() =>
                 setFormData({ ...formData, primaryProvider: "mistral" })
               }
-              className={`flex-1 rounded-xl border p-3 text-center text-sm font-semibold transition-all ${
+              className={cn(
+                "flex-1 rounded-xl border py-2 text-center text-xs font-semibold transition-all sm:py-2.5 sm:text-sm cursor-pointer",
                 formData.primaryProvider === "mistral"
                   ? "border-brand-orange bg-[#fff2ee] text-brand-orange"
-                  : "border-[#dfe4de] bg-white hover:bg-brand-paper"
-              }`}
+                  : "border-[#dfe4de] bg-white text-brand-gray hover:bg-brand-paper",
+              )}
             >
               Mistral
             </button>
           </div>
         </div>
 
-        <div className="space-y-4">
-          <div className="flex items-center gap-2 mb-2">
-            <Key className="w-5 h-5 text-brand-orange" />
-            <h3 className="font-semibold">AI access</h3>
+        <div className="space-y-2.5 sm:space-y-3.5">
+          <div className="flex items-center gap-2">
+            <Key className="h-4 w-4 text-brand-orange sm:h-5 sm:w-5" />
+            <h3 className="text-xs font-bold text-brand-black sm:text-sm">
+              AI access
+            </h3>
           </div>
-          <div className="space-y-3">
+          <div className="space-y-2 sm:space-y-3">
             <div>
-              <label className="mb-1.5 block text-xs font-medium text-brand-gray">
+              <label className="mb-1 block text-[10px] font-semibold text-brand-gray sm:text-xs">
                 Gemini API key
               </label>
               <Input
@@ -90,10 +97,11 @@ export function SettingsModal({
                   setFormData({ ...formData, geminiApiKey: e.target.value })
                 }
                 placeholder="Enter your Gemini API key"
+                className="h-9 px-3 py-1.5 text-[11px] placeholder:text-[11px] sm:h-11 sm:px-4 sm:py-2.5 sm:text-xs"
               />
             </div>
             <div>
-              <label className="mb-1.5 block text-xs font-medium text-brand-gray">
+              <label className="mb-1 block text-[10px] font-semibold text-brand-gray sm:text-xs">
                 Mistral API key
               </label>
               <Input
@@ -103,22 +111,23 @@ export function SettingsModal({
                   setFormData({ ...formData, mistralApiKey: e.target.value })
                 }
                 placeholder="Enter your Mistral API key"
+                className="h-9 px-3 py-1.5 text-[11px] placeholder:text-[11px] sm:h-11 sm:px-4 sm:py-2.5 sm:text-xs"
               />
             </div>
           </div>
         </div>
 
-        <div className="space-y-4">
-          <div className="flex items-center gap-2 mb-2">
-            <Globe className="w-5 h-5 text-brand-orange" />
-            <h3 className="font-semibold">
+        <div className="space-y-2.5 sm:space-y-3.5">
+          <div className="flex items-center gap-2">
+            <Globe className="h-4 w-4 text-brand-orange sm:h-5 sm:w-5" />
+            <h3 className="text-xs font-bold text-brand-black sm:text-sm">
               Search access{" "}
               <span className="font-normal text-brand-gray">(optional)</span>
             </h3>
           </div>
-          <div className="space-y-3">
+          <div className="space-y-2 sm:space-y-3">
             <div>
-              <label className="mb-1.5 block text-xs font-medium text-brand-gray">
+              <label className="mb-1 block text-[10px] font-semibold text-brand-gray sm:text-xs">
                 Tavily API key
               </label>
               <Input
@@ -128,10 +137,11 @@ export function SettingsModal({
                   setFormData({ ...formData, tavilyApiKey: e.target.value })
                 }
                 placeholder="Enter your Tavily API key"
+                className="h-9 px-3 py-1.5 text-[11px] placeholder:text-[11px] sm:h-11 sm:px-4 sm:py-2.5 sm:text-xs"
               />
             </div>
             <div>
-              <label className="mb-1.5 block text-xs font-medium text-brand-gray">
+              <label className="mb-1 block text-[10px] font-semibold text-brand-gray sm:text-xs">
                 Serper API key
               </label>
               <Input
@@ -141,21 +151,25 @@ export function SettingsModal({
                   setFormData({ ...formData, serperApiKey: e.target.value })
                 }
                 placeholder="Enter your Serper API key"
+                className="h-9 px-3 py-1.5 text-[11px] placeholder:text-[11px] sm:h-11 sm:px-4 sm:py-2.5 sm:text-xs"
               />
             </div>
           </div>
         </div>
 
-        <div className="flex gap-2 border-t border-[#e5e9e4] pt-5">
+        <div className="flex gap-2 border-t border-[#e5e9e4] pt-3.5 sm:pt-4">
           <Button
             type="button"
             variant="secondary"
             onClick={onClose}
-            className="flex-1"
+            className="h-9 flex-1 px-3 text-xs sm:h-11 sm:px-4 sm:text-sm"
           >
             Cancel
           </Button>
-          <Button type="submit" className="flex-1">
+          <Button
+            type="submit"
+            className="h-9 flex-1 px-3 text-xs sm:h-11 sm:px-4 sm:text-sm"
+          >
             Save Settings
           </Button>
         </div>

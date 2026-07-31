@@ -251,28 +251,28 @@ export default function Home() {
         <div className="loading-ambient loading-ambient-three" />
         <div className="loading-grid" />
 
-        <div className="relative flex w-full max-w-sm flex-col items-center px-8 text-center">
+        <div className="relative flex w-full max-w-sm flex-col items-center px-6 text-center sm:px-8">
           <div className="loading-mark-wrap">
-            <span className="loading-ripple loading-ripple-1" />
-            <span className="loading-ripple loading-ripple-2" />
-            <span className="loading-orbit-outer" />
-            <span className="loading-orbit-inner" />
-            <BrandMark className="loading-mark h-[72px] w-[72px] shadow-[0_18px_45px_rgba(232,93,63,0.3)]" />
+            <span className="loading-ripple loading-ripple-1 max-sm:scale-75" />
+            <span className="loading-ripple loading-ripple-2 max-sm:scale-75" />
+            <span className="loading-orbit-outer max-sm:scale-75" />
+            <span className="loading-orbit-inner max-sm:scale-75" />
+            <BrandMark className="loading-mark h-12 w-12 shadow-[0_12px_30px_rgba(232,93,63,0.3)] sm:h-[72px] sm:w-[72px] sm:shadow-[0_18px_45px_rgba(232,93,63,0.3)]" />
           </div>
 
-          <div className="mt-8">
-            <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-brand-orange">
+          <div className="mt-5 sm:mt-8">
+            <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-brand-orange sm:tracking-[0.28em]">
               Learn without limits
             </p>
-            <h1 className="font-display mt-2 text-[34px] font-bold leading-none tracking-[-0.035em] text-brand-black">
+            <h1 className="font-display mt-1.5 text-xl font-bold leading-none tracking-[-0.035em] text-brand-black sm:mt-2 sm:text-[34px]">
               coursenva
             </h1>
-            <p className="mt-2.5 text-xs font-medium text-brand-gray">
+            <p className="mt-2 text-[11px] font-medium text-brand-gray sm:mt-2.5 sm:text-xs">
               Preparing your personalized learning space…
             </p>
           </div>
 
-          <div className="loading-progress mt-8" aria-hidden="true">
+          <div className="loading-progress mt-6 sm:mt-8" aria-hidden="true">
             <span />
           </div>
           <span className="sr-only">Loading Coursenva</span>
@@ -544,14 +544,14 @@ export default function Home() {
 
       <footer className="border-t border-[#e3e8e2] bg-white">
         {/* Mobile Only Footer (sm:hidden) */}
-        <div className="flex flex-col gap-1.5 px-4 py-4.5 text-xs text-brand-gray max-sm:pr-16 max-sm:pb-[max(1.125rem,env(safe-area-inset-bottom))] sm:hidden">
+        <div className="flex flex-col gap-1.5 px-3.5 py-3.5 text-brand-gray max-sm:pr-20 max-sm:pb-[max(1.25rem,env(safe-area-inset-bottom))] sm:hidden">
           <div className="flex items-center gap-2.5">
-            <BrandMark className="h-7.5 w-7.5 shrink-0" />
-            <div>
-              <p className="font-semibold text-brand-black">
+            <BrandMark className="h-7 w-7 shrink-0 shadow-sm" />
+            <div className="min-w-0 flex-1">
+              <p className="text-[11px] font-bold tracking-tight text-brand-black leading-tight">
                 Learn more. Spend less. Grow continuously.
               </p>
-              <p className="mt-0.5 text-[10px] text-brand-gray/80">
+              <p className="mt-0.5 text-[9.5px] font-medium text-brand-gray/80 leading-tight">
                 Coursera · edX · MIT OCW · YouTube · and more
               </p>
             </div>
